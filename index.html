@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 17 10 11 4 5'%3E%3C/polyline%3E%3Cline x1='12' y1='19' x2='20' y2='19'%3E%3C/line%3E%3C/svg%3E">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev & Security | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root { --accent: #6366f1; }
+        body { background-color: #050505; color: #e4e4e7; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.4s ease; }
+        .glass:hover { border-color: rgba(99, 102, 241, 0.3); }
+        .reveal { opacity: 0; transform: translateY(15px); } 
+        #cursor-glow { position: fixed; top: 0; left: 0; width: 600px; height: 600px; background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, rgba(0,0,0,0) 70%); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: 0; display: none; }
+        @media (hover: hover) { #cursor-glow { display: block; } }
+        .badge { background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); color: #818cf8; padding: 2px 10px; border-radius: 99px; font-size: 10px; font-family: monospace; text-transform: uppercase; }
+        
+        /* Active nav styling */
+        .nav-item { position: relative; transition: all 0.3s ease; }
+        .active-page { color: #818cf8 !important; font-weight: bold; }
+        .active-page::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #6366f1; border-radius: 50%; box-shadow: 0 0 10px #6366f1; }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-500">
+    <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
+    <div id="cursor-glow"></div>
+
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 md:px-6 py-4">
+        <div class="max-w-6xl mx-auto glass rounded-full px-5 md:px-8 py-3 md:py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4 md:gap-6">
+                <div class="flex items-center gap-2 md:gap-3 border-r border-white/10 pr-4 md:pr-6">
+                    <div class="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <a href="index.html" class="text-lg md:text-xl font-black tracking-tighter text-indigo-500 uppercase">System.Root</a>
+                </div>
+                
+                <div class="hidden sm:flex gap-6 font-mono uppercase tracking-widest text-zinc-500">
+                    <div class="flex flex-col">
+                        <span class="text-[7px] text-zinc-600">Lat_Ping</span>
+                        <span id="ping-stat" class="text-[11px] text-indigo-400 font-bold">--ms</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-[7px] text-zinc-600">Loc_Origin</span>
+                        <span id="location-stat" class="text-[11px] text-white font-bold tracking-tight">Detecting...</span>
+                    </div>
+                </div>
+            </div>
+
+<div id="nav-container" class="flex gap-4 md:gap-8 text-[10px] md:text-xs font-mono uppercase tracking-widest text-zinc-400">
+<a href="index.html" class="nav-item hover:text-white transition-colors">Home</a>
+<a href="works.html" class="nav-item hover:text-white transition-colors">Works</a>
+<a href="contact.html" class="nav-item hover:text-white transition-colors">Contact</a>
+</div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-12 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-auto md:auto-rows-[160px]">
+            <div class="reveal md:col-span-8 md:row-span-3 glass rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 flex flex-col justify-end relative overflow-hidden group min-h-[300px] md:min-h-full">
+                <div class="absolute top-0 right-0 p-6 md:p-8"><span class="badge">Session: Active</span></div>
+                <h1 class="text-4xl md:text-8xl font-black tracking-tighter leading-[0.85] uppercase">App Creator <br><span class="text-indigo-500 italic font-light">&</span> Security.</h1>
+                <p class="text-zinc-500 mt-6 md:mt-8 max-w-lg font-medium text-sm md:text-lg">Student of Cybersecurity bridging the gap between <span class="text-white">low-level C++ performance</span> and <span class="text-white">hardened system integrity</span>.</p>
+            </div>
+
+            <div class="reveal md:col-span-4 md:row-span-2 glass rounded-[2.5rem] md:rounded-[3rem] p-8 flex flex-col justify-between">
+                <div class="space-y-2">
+                    <h3 class="text-indigo-400 font-mono text-[10px] md:text-xs uppercase tracking-widest">Core Philosophy</h3>
+                    <p class="text-lg md:text-xl font-bold leading-tight">Solving real-world problems through logical engineering.</p>
+                </div>
+                <p class="text-zinc-500 text-xs md:text-sm italic">"Efficiency is the highest form of security. If it’s fast, simple, and clean, it’s harder to break."</p>
+            </div>
+
+            <div class="reveal md:col-span-4 md:row-span-2 glass rounded-[2.5rem] md:rounded-[3rem] p-8 flex flex-col justify-between hover:bg-white/5 transition-colors">
+                <h3 class="text-indigo-400 font-mono text-[10px] md:text-xs uppercase tracking-widest">Environment</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge">C++17/20</span> <span class="badge">C# .NET</span> <span class="badge">Arch Linux</span> <span class="badge">Git</span> <span class="badge">Pen-Testing</span>
+                </div>
+                <div class="pt-4 border-t border-white/5 text-[10px] font-mono text-zinc-600">LOAD_MODULES: SUCCESSFUL</div>
+            </div>
+
+            <a href="works.html" class="reveal md:col-span-4 md:row-span-1 glass rounded-full px-8 md:px-10 py-6 md:py-0 flex items-center justify-between bg-indigo-600 border-none hover:bg-white hover:text-black transition-all group">
+                <span class="font-bold uppercase tracking-widest text-xs md:text-sm">View Project Archive</span>
+                <span class="group-hover:translate-x-2 transition-transform text-lg md:text-xl">→</span>
+            </a>
+
+            <div class="reveal md:col-span-4 md:row-span-1 glass rounded-full px-8 md:px-10 py-6 md:py-0 flex items-center gap-4">
+                <div class="h-2 w-2 bg-indigo-500 rounded-full shadow-[0_0_10px_#6366f1]"></div>
+                <span class="text-[10px] md:text-xs font-mono uppercase tracking-widest text-zinc-400">Available for Freelance</span>
+            </div>
+        </div>
+
+        <footer class="mt-20 py-10 border-t border-white/5 flex flex-col md:flex-row justify-between gap-8 text-zinc-500 text-center md:text-left">
+            <div class="space-y-4">
+                <p class="text-[10px] font-mono uppercase tracking-[0.3em]">Built with precision</p>
+                <p class="text-[10px] md:text-xs max-w-sm mx-auto md:mx-0 leading-relaxed">Developed using Tailwind CSS, Alpine.js, and a focus on performance.</p>
+            </div>
+            <div class="flex flex-col md:items-end justify-end space-y-2">
+                <div class="text-[10px] font-mono uppercase tracking-[0.2em]">© 2026 ROOT_ACCESS_GRANTED</div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="ui-logic.js"></script>
+    <script>
+        // Cursor Glow
+        const glow = document.getElementById('cursor-glow');
+        window.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>
