@@ -1,33 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #050505; color: white; font-family: sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>misa-stack | About</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 17 10 11 4 5'%3E%3C/polyline%3E%3Cline x1='12' y1='19' x2='20' y2='19'%3E%3C/line%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root{--accent:#6366f1;}*{box-sizing:border-box;}html,body{height:100%;}
+    body{background:#050505;color:#e4e4e7;font-family:'Space Mono',monospace;overflow-x:hidden;}
+    .glass{background:rgba(255,255,255,0.02);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.07);transition:border-color .4s;}
+    .glass:hover{border-color:rgba(99,102,241,0.25);}
+    .reveal{opacity:1;}
+    .badge{background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.25);color:#818cf8;padding:3px 10px;border-radius:99px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
+    .nav-item{position:relative;transition:color .3s;}
+    .active-page{color:#818cf8 !important;font-weight:700;}
+    .active-page::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);}
+    .lang-active{color:#818cf8 !important;font-weight:700;}
+    .lang-inactive{color:#52525b;}
+    .lang-inactive:hover{color:#a1a1aa;}
+    .serif-italic{font-family:'DM Serif Display',serif;font-style:italic;}
+    .tl-item{position:relative;padding-left:1.4rem;}
+    .tl-item::before{content:'';position:absolute;left:0;top:7px;width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);}
+    .section-label{display:inline-flex;align-items:center;gap:10px;font-size:10px;text-transform:uppercase;letter-spacing:.25em;color:#6366f1;margin-bottom:1rem;}
+    .section-label::before{content:'';display:block;width:24px;height:1px;background:#6366f1;opacity:.6;}
+    .about-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;}
+    @media(max-width:768px){.about-grid{display:flex;flex-direction:column;}}
+  </style>
 </head>
 <body class="antialiased">
-    <main class="max-w-4xl mx-auto px-6 py-20">
-        <div class="glass rounded-[3rem] p-12">
-            <h1 class="text-6xl font-bold tracking-tighter mb-8 text-indigo-400">The Story.</h1>
-            <div class="space-y-6 text-xl text-zinc-400 leading-relaxed">
-                <p>I am a developer who believes that functional code should be as beautiful as the interface it powers.</p>
-                <p>With 5 years of experience in digital craftsmanship, I specialize in turning complex problems into elegant, simple solutions.</p>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4 mt-12">
-                <div class="p-6 bg-white/5 rounded-2xl">
-                    <h4 class="text-white font-bold">2023 - Present</h4>
-                    <p class="text-sm text-zinc-500">Senior Dev at Studio-X</p>
-                </div>
-                <div class="p-6 bg-white/5 rounded-2xl">
-                    <h4 class="text-white font-bold">2021 - 2023</h4>
-                    <p class="text-sm text-zinc-500">UX Engineer at TechCorp</p>
-                </div>
-            </div>
+<canvas id="bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
+
+<nav class="fixed top-0 left-0 w-full z-50 px-4 md:px-6 py-4">
+  <div class="max-w-7xl mx-auto glass rounded-full px-5 md:px-8 py-3 flex justify-between items-center">
+    <div class="flex items-center gap-5">
+      <div class="flex items-center gap-2 border-r border-white/10 pr-5">
+        <div class="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
+        <a href="index.html" class="text-sm font-bold tracking-tighter text-indigo-500 uppercase">System.Root</a>
+      </div>
+      <div class="hidden sm:flex gap-5">
+        <div class="flex flex-col"><span class="text-[7px] uppercase tracking-widest text-zinc-700">Ping</span><span id="ping-stat" class="text-[11px] text-indigo-400 font-bold">--ms</span></div>
+        <div class="flex flex-col"><span class="text-[7px] uppercase tracking-widest text-zinc-700">Origin</span><span id="location-stat" class="text-[11px] text-white font-bold">...</span></div>
+      </div>
+    </div>
+    <div class="flex items-center gap-5 md:gap-7">
+      <div id="nav-container" class="flex gap-3 md:gap-6 text-[10px] uppercase tracking-widest text-zinc-500">
+        <a href="index.html"   class="nav-item hover:text-white transition-colors" data-en="Home"    data-cz="Domů">Home</a>
+        <a href="about.html"   class="nav-item hover:text-white transition-colors" data-en="About"   data-cz="O mně">About</a>
+        <a href="works.html"   class="nav-item hover:text-white transition-colors" data-en="Works"   data-cz="Projekty">Works</a>
+        <a href="pricing.html" class="nav-item hover:text-white transition-colors" data-en="Pricing" data-cz="Ceník">Pricing</a>
+        <a href="contact.html" class="nav-item hover:text-white transition-colors" data-en="Contact" data-cz="Kontakt">Contact</a>
+      </div>
+      <div class="flex items-center gap-1 border-l border-white/10 pl-5">
+        <button data-lang="en" class="lang-inactive text-[10px] uppercase tracking-widest transition-colors cursor-pointer px-1">EN</button>
+        <span class="text-zinc-700 text-[10px]">/</span>
+        <button data-lang="cz" class="lang-inactive text-[10px] uppercase tracking-widest transition-colors cursor-pointer px-1">CZ</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 md:px-6 relative z-10" style="padding-top:100px;padding-bottom:30px;">
+
+  <div class="reveal mb-8">
+    <p class="section-label" data-en="// SYS.PROFILE" data-cz="// PROFIL">// SYS.PROFILE</p>
+    <h1 class="text-5xl md:text-8xl font-bold tracking-tighter uppercase leading-[0.85]">
+      <span data-en="The " data-cz="Můj ">The </span><span class="serif-italic normal-case font-normal text-indigo-400" data-en="Story." data-cz="Příběh.">Story.</span>
+    </h1>
+  </div>
+
+  <div class="about-grid">
+
+    <!-- BIO col 1-9 -->
+    <div class="reveal glass rounded-[2rem] p-8 md:p-10 flex flex-col gap-5" style="grid-column:1/9;">
+      <h2 class="text-[9px] text-indigo-400 uppercase tracking-widest" data-en="Bio.init()" data-cz="Bio.init()">Bio.init()</h2>
+      <p class="text-zinc-300 text-base md:text-lg leading-relaxed"
+         data-en="I'm a developer and cybersecurity student at SPŠS, based in the Czech Republic. My work lives at the intersection of low-level systems programming — writing C++ engines that squeeze performance out of hardware — and security, where I think like an attacker to build better defenses."
+         data-cz="Jsem vývojář a student kybernetické bezpečnosti na SPŠS v České republice. Moje práce stojí na průsečíku nízkoúrovňového systémového programování — píši C++ enginy, které vytlačují maximum z hardware — a bezpečnosti, kde přemýšlím jako útočník, abych budoval lepší obranu.">
+        I'm a developer and cybersecurity student at SPŠS, based in the Czech Republic. My work lives at the intersection of low-level systems programming — writing C++ engines that squeeze performance out of hardware — and security, where I think like an attacker to build better defenses.
+      </p>
+      <p class="text-zinc-500 text-sm md:text-base leading-relaxed"
+         data-en="Outside of code I'm into literature (big Karel Čapek fan), multiplayer games with deep progression, and building tools that solve real problems — not demo ones."
+         data-cz="Mimo kód mě baví literatura (velký fanoušek Karla Čapka), multiplayerové hry s hlubokými progresními systémy a tvorba nástrojů, které řeší skutečné problémy.">
+        Outside of code I'm into literature (big Karel Čapek fan), multiplayer games with deep progression, and building tools that solve real problems — not demo ones.
+      </p>
+      <blockquote class="border-l-2 border-indigo-500/40 pl-5 mt-1">
+        <p class="text-indigo-300 serif-italic text-xl"
+           data-en='"Efficiency is the highest form of security. Fast, simple, clean — harder to break."'
+           data-cz='"Efektivita je nejvyšší formou bezpečnosti. Rychlé, jednoduché, čisté — těžší prolomit."'>
+          "Efficiency is the highest form of security. Fast, simple, clean — harder to break."
+        </p>
+      </blockquote>
+    </div>
+
+    <!-- SIDEBAR col 9-13 -->
+    <div class="reveal flex flex-col gap-3" style="grid-column:9/13;">
+      <div class="glass rounded-[2rem] p-6 space-y-3">
+        <h3 class="text-[9px] text-indigo-400 uppercase tracking-widest mb-2" data-en="System_Info" data-cz="Info">System_Info</h3>
+        <div class="space-y-2 text-[11px]">
+          <div class="flex justify-between"><span class="text-zinc-600" data-en="Status" data-cz="Status">Status</span><span class="text-green-400">● <span data-en="Online" data-cz="Online">Online</span></span></div>
+          <div class="flex justify-between"><span class="text-zinc-600" data-en="Location" data-cz="Lokace">Location</span><span class="text-white">Prague, CZ</span></div>
+          <div class="flex justify-between"><span class="text-zinc-600">OS</span><span class="text-white">Arch Linux</span></div>
+          <div class="flex justify-between"><span class="text-zinc-600" data-en="Focus" data-cz="Zaměření">Focus</span><span class="text-white" data-en="Cybersecurity" data-cz="Kybernetická bezpečnost">Cybersecurity</span></div>
+          <div class="flex justify-between"><span class="text-zinc-600" data-en="Freelance" data-cz="Freelance">Freelance</span><span class="text-indigo-400" data-en="Available" data-cz="Dostupný">Available</span></div>
         </div>
-    </main>
+      </div>
+      <div class="glass rounded-[2rem] p-6 flex-1">
+        <h3 class="text-[9px] text-indigo-400 uppercase tracking-widest mb-4" data-en="Interests" data-cz="Zájmy">Interests</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="badge">C++ Systems</span>
+          <span class="badge" data-en="Pen Testing" data-cz="Pen Testing">Pen Testing</span>
+          <span class="badge">SIMD / AVX2</span>
+          <span class="badge" data-en="Physics Engines" data-cz="Fyzikální enginy">Physics Engines</span>
+          <span class="badge" data-en="Linux Hardening" data-cz="Linux Hardening">Linux Hardening</span>
+          <span class="badge">Karel Čapek</span>
+          <span class="badge" data-en="Multiplayer Games" data-cz="Multiplayer hry">Multiplayer Games</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE col 1-9 -->
+    <div class="reveal glass rounded-[2rem] p-8 md:p-10" style="grid-column:1/9;">
+      <h2 class="text-[9px] text-indigo-400 uppercase tracking-widest mb-8" data-en="Timeline.log" data-cz="Časová osa">Timeline.log</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+        <div class="tl-item">
+          <p class="text-[9px] text-zinc-600 uppercase tracking-widest" data-en="2024 – Present" data-cz="2024 – Nyní">2024 – Present</p>
+          <p class="text-white font-bold text-base mt-1" data-en="Cybersecurity @ SPŠS" data-cz="Kybernetická bezpečnost @ SPŠS">Cybersecurity @ SPŠS</p>
+          <p class="text-zinc-500 text-sm mt-1 leading-relaxed" data-en="Network security, cryptography, OS hardening, ethical hacking." data-cz="Síťová bezpečnost, kryptografie, hardening OS, etický hacking.">Network security, cryptography, OS hardening, ethical hacking.</p>
+        </div>
+        <div class="tl-item">
+          <p class="text-[9px] text-zinc-600 uppercase tracking-widest">2024</p>
+          <p class="text-white font-bold text-base mt-1">Iron Duel</p>
+          <p class="text-zinc-500 text-sm mt-1 leading-relaxed" data-en="C++17 ballistic physics simulator with bitmask terrain destruction." data-cz="C++17 balistický simulátor s bitmaskovou destrukcí terénu.">C++17 ballistic physics simulator with bitmask terrain destruction.</p>
+        </div>
+        <div class="tl-item">
+          <p class="text-[9px] text-zinc-600 uppercase tracking-widest">2024</p>
+          <p class="text-white font-bold text-base mt-1">Komplex</p>
+          <p class="text-zinc-500 text-sm mt-1 leading-relaxed" data-en="Infinite-zoom fractal engine — AVX2 SIMD + multi-threaded tiles." data-cz="Fraktálový engine s nekonečným zoomem — AVX2 SIMD + vlákna.">Infinite-zoom fractal engine — AVX2 SIMD + multi-threaded tiles.</p>
+        </div>
+        <div class="tl-item">
+          <p class="text-[9px] text-zinc-600 uppercase tracking-widest" data-en="Ongoing" data-cz="Průběžně">Ongoing</p>
+          <p class="text-white font-bold text-base mt-1" data-en="Portfolio Website" data-cz="Portfolio">Portfolio Website</p>
+          <p class="text-zinc-500 text-sm mt-1 leading-relaxed" data-en="This site. Tailwind, GSAP, AlpineJS. No framework, no build step." data-cz="Tento web. Tailwind, GSAP, AlpineJS. Žádný framework, žádný build.">This site. Tailwind, GSAP, AlpineJS. No framework, no build step.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOW LEARNING col 9-13 -->
+    <div class="reveal glass rounded-[2rem] p-7 flex flex-col gap-5" style="grid-column:9/13;">
+      <h3 class="text-[9px] text-indigo-400 uppercase tracking-widest" data-en="Now_Learning" data-cz="Aktuálně se učím">Now_Learning</h3>
+      <div class="space-y-5 flex-1">
+        <div>
+          <div class="flex justify-between text-xs text-zinc-400 mb-2"><span data-en="Network Security" data-cz="Síťová bezpečnost">Network Security</span><span class="text-indigo-400 text-[10px]" data-en="Active" data-cz="Aktivní">Active</span></div>
+          <div class="h-1 bg-white/5 rounded-full relative overflow-hidden"><div class="absolute top-0 left-0 h-full w-[60%] bg-gradient-to-r from-indigo-500 to-purple-400 rounded-full"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs text-zinc-400 mb-2"><span data-en="Ethical Hacking" data-cz="Etický hacking">Ethical Hacking</span><span class="text-indigo-400 text-[10px]" data-en="Active" data-cz="Aktivní">Active</span></div>
+          <div class="h-1 bg-white/5 rounded-full relative overflow-hidden"><div class="absolute top-0 left-0 h-full w-[45%] bg-gradient-to-r from-indigo-500 to-purple-400 rounded-full"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs text-zinc-400 mb-2"><span data-en="Cryptography" data-cz="Kryptografie">Cryptography</span><span class="text-zinc-600 text-[10px]" data-en="Queued" data-cz="Ve frontě">Queued</span></div>
+          <div class="h-1 bg-white/5 rounded-full relative overflow-hidden"><div class="absolute top-0 left-0 h-full w-[20%] bg-gradient-to-r from-indigo-500 to-purple-400 rounded-full opacity-50"></div></div>
+        </div>
+      </div>
+      <a href="works.html" class="block text-center text-[10px] uppercase tracking-widest text-indigo-400 border border-indigo-500/30 rounded-full py-3 hover:bg-indigo-600 hover:text-white hover:border-transparent transition-all"
+         data-en="See My Projects →" data-cz="Moje projekty →">See My Projects →</a>
+    </div>
+
+  </div>
+
+  <footer class="mt-6 py-4 border-t border-white/5 flex justify-between text-zinc-700">
+    <p class="text-[9px] uppercase tracking-[0.25em]">Tailwind · GSAP · Vanilla JS</p>
+    <p class="text-[9px] uppercase tracking-[0.2em]">© 2026 ROOT_ACCESS_GRANTED</p>
+  </footer>
+</main>
+
+<script src="ui-logic.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    if (typeof gsap !== 'undefined') gsap.fromTo('.reveal',{opacity:0,y:18},{opacity:1,y:0,duration:.7,stagger:.1,ease:'power3.out'});
+  });
+</script>
 </body>
 </html>

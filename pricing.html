@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>misa-stack | Pricing</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 17 10 11 4 5'%3E%3C/polyline%3E%3Cline x1='12' y1='19' x2='20' y2='19'%3E%3C/line%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root { --accent: #6366f1; --accent-glow: rgba(99,102,241,0.18); }
+    * { box-sizing: border-box; }
+    body { background-color: #050505; color: #e4e4e7; font-family: 'Space Mono', monospace; overflow-x: hidden; }
+
+    /* Glass */
+    .glass {
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: border-color .4s ease, background .4s ease, box-shadow .4s ease;
+    }
+
+    /* Nav */
+    .nav-item { position: relative; transition: color .3s; }
+    .active-page { color: #818cf8 !important; font-weight: 700; }
+    .active-page::after {
+      content:''; position:absolute; bottom:-7px; left:50%;
+      transform:translateX(-50%); width:4px; height:4px;
+      background:var(--accent); border-radius:50%;
+      box-shadow:0 0 10px var(--accent);
+    }
+
+    /* Lang toggle */
+    .lang-active  { color: #818cf8 !important; font-weight: 700; }
+    .lang-inactive { color: #52525b; }
+    .lang-inactive:hover { color: #a1a1aa; }
+
+    /* Reveal */
+    .reveal { opacity: 1; }
+
+    /* Section label */
+    .section-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10px; text-transform: uppercase; letter-spacing: .25em;
+      color: #6366f1; margin-bottom: 1.5rem;
+    }
+    .section-label::before {
+      content:''; display:block; width:24px; height:1px;
+      background: #6366f1; opacity:.6;
+    }
+
+    /* Pricing card */
+    .price-card {
+      position: relative; border-radius: 1.75rem;
+      padding: 2rem; display: flex; flex-direction: column;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .price-card:hover { transform: translateY(-6px); }
+
+    .price-card.standard {
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.45) !important;
+      box-shadow: 0 0 60px rgba(99,102,241,0.14);
+    }
+    .price-card.standard:hover {
+      box-shadow: 0 8px 80px rgba(99,102,241,0.22);
+    }
+
+    /* Price number */
+    .price-amount {
+      font-size: 2.8rem; font-weight: 700; line-height: 1;
+      letter-spacing: -.02em;
+    }
+    .price-from {
+      font-size: 10px; color: #52525b; text-transform: uppercase;
+      letter-spacing: .15em; margin-bottom: .3rem;
+    }
+
+    /* Feature list */
+    .feat-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .75rem; }
+    .feat-list li { display: flex; align-items: flex-start; gap: .6rem; font-size: 11px; color: #a1a1aa; line-height: 1.5; }
+    .feat-list li::before { content:'✓'; color:#6366f1; font-size:11px; margin-top:1px; flex-shrink:0; }
+    .feat-list li.dim { color: #3f3f46; }
+    .feat-list li.dim::before { content:'–'; color:#3f3f46; }
+
+    /* CTA btn */
+    .card-btn {
+      margin-top: auto; padding-top: 1.5rem;
+      display: block; text-align: center;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .15em; padding: 14px 0; border-radius: 99px;
+      transition: background .25s, color .25s, border-color .25s;
+    }
+    .card-btn-outline {
+      border: 1px solid rgba(255,255,255,0.1); color: #71717a;
+    }
+    .card-btn-outline:hover { border-color: var(--accent); color: white; }
+    .card-btn-filled { background: var(--accent); color: white; border: 1px solid transparent; }
+    .card-btn-filled:hover { background: white; color: black; }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 3.5rem 0; }
+
+    /* Badge */
+    .badge {
+      background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.28);
+      color: #818cf8; padding: 2px 9px; border-radius: 99px;
+      font-size: 9px; text-transform: uppercase; letter-spacing: .06em;
+    }
+    .badge-pop {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: white;
+      font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+      padding: 4px 14px; border-radius: 99px;
+      white-space: nowrap; box-shadow: 0 4px 20px rgba(99,102,241,0.4);
+    }
+
+    /* Serif accent */
+    .serif-italic { font-family: 'DM Serif Display', serif; font-style: italic; }
+
+    /* CTA scan line */
+    .scan-line {
+      width:100%; height:2px; pointer-events:none;
+      background:linear-gradient(90deg,transparent,var(--accent),transparent);
+      position:absolute; top:0; left:0;
+      animation:scan 5s linear infinite; opacity:.15;
+    }
+    @keyframes scan { 0%{top:0} 100%{top:100%} }
+  </style>
+</head>
+<body class="antialiased">
+<canvas id="bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav class="fixed top-0 left-0 w-full z-50 px-4 md:px-6 py-4">
+  <div class="max-w-7xl mx-auto glass rounded-full px-5 md:px-8 py-3 flex justify-between items-center">
+
+    <!-- Left: logo + stats -->
+    <div class="flex items-center gap-5">
+      <div class="flex items-center gap-2 border-r border-white/10 pr-5">
+        <div class="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
+        <a href="index.html" class="text-sm font-bold tracking-tighter text-indigo-500 uppercase">System.Root</a>
+      </div>
+      <div class="hidden sm:flex gap-5 text-zinc-600">
+        <div class="flex flex-col">
+          <span class="text-[7px] uppercase tracking-widest text-zinc-700">Ping</span>
+          <span id="ping-stat" class="text-[11px] text-indigo-400 font-bold">--ms</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[7px] uppercase tracking-widest text-zinc-700">Origin</span>
+          <span id="location-stat" class="text-[11px] text-white font-bold">...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: nav links + lang switcher -->
+    <div class="flex items-center gap-5 md:gap-7">
+      <div id="nav-container" class="flex gap-3 md:gap-6 text-[10px] uppercase tracking-widest text-zinc-500">
+        <a href="index.html"   class="nav-item hover:text-white transition-colors" data-en="Home"    data-cz="Domů">Home</a>
+        <a href="about.html"   class="nav-item hover:text-white transition-colors" data-en="About"   data-cz="O mně">About</a>
+        <a href="works.html"   class="nav-item hover:text-white transition-colors" data-en="Works"   data-cz="Projekty">Works</a>
+        <a href="pricing.html" class="nav-item hover:text-white transition-colors" data-en="Pricing" data-cz="Ceník">Pricing</a>
+        <a href="contact.html" class="nav-item hover:text-white transition-colors" data-en="Contact" data-cz="Kontakt">Contact</a>
+      </div>
+
+      <!-- Lang toggle -->
+      <div class="flex items-center gap-1 border-l border-white/10 pl-5">
+        <button data-lang="en" class="lang-inactive text-[10px] uppercase tracking-widest transition-colors cursor-pointer px-1">EN</button>
+        <span class="text-zinc-700 text-[10px]">/</span>
+        <button data-lang="cz" class="lang-inactive text-[10px] uppercase tracking-widest transition-colors cursor-pointer px-1">CZ</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MAIN ──────────────────────────────────────────────────── -->
+<main class="max-w-7xl mx-auto px-4 md:px-6 relative z-10" style="padding-top:100px; padding-bottom:40px;">
+
+  <!-- Page header -->
+  <div class="reveal mb-3">
+    <p class="section-label" data-en="// Service Packages" data-cz="// Balíčky služeb">// Service Packages</p>
+    <h1 class="text-5xl md:text-8xl font-bold tracking-tighter uppercase leading-[0.85]">
+      Pricing<span class="serif-italic normal-case font-normal text-indigo-400">.</span>
+    </h1>
+  </div>
+  <p class="reveal text-zinc-500 text-sm mb-14 max-w-xl leading-relaxed">
+    <span data-en="Starting prices — every project is scoped individually. Not sure what you need?" data-cz="Orientační ceny — každý projekt je kalkulován individuálně. Nevíš co potřebuješ?">Starting prices — every project is scoped individually. Not sure what you need?</span>
+    <a href="contact.html" class="text-indigo-400 hover:text-white transition-colors ml-1" data-en="Just write me." data-cz="Napiš mi.">Just write me.</a>
+  </p>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 1 — C++ / Systems
+  ═══════════════════════════════════════ -->
+  <div class="reveal flex items-center gap-4 mb-8">
+    <div class="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-base">⚙️</div>
+    <div>
+      <p class="text-[9px] text-zinc-600 uppercase tracking-widest" data-en="Category 01" data-cz="Kategorie 01">Category 01</p>
+      <h2 class="text-lg font-bold uppercase tracking-tight" data-en="C++ / Systems Programming" data-cz="C++ / Systémové programování">C++ / Systems Programming</h2>
+    </div>
+  </div>
+
+  <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+
+    <!-- Starter -->
+    <div class="price-card glass">
+      <p class="price-from" data-en="Starting from" data-cz="Od">Starting from</p>
+      <div class="flex items-end gap-2 mb-5">
+        <span class="price-amount">1 500</span>
+        <span class="text-zinc-500 text-sm mb-2">CZK</span>
+      </div>
+      <p class="text-[9px] text-zinc-600 uppercase tracking-widest mb-1" data-en="Starter" data-cz="Základní">Starter</p>
+      <p class="text-white font-bold text-sm mb-6" data-en="Small utility or CLI tool" data-cz="Malý nástroj nebo CLI utilita">Small utility or CLI tool</p>
+      <ul class="feat-list flex-1 mb-8">
+        <li data-en="Up to ~300 lines of code" data-cz="Až ~300 řádků kódu">Up to ~300 lines of code</li>
+        <li data-en="1 revision round" data-cz="1 kolo revizí">1 revision round</li>
+        <li data-en="Source code delivered" data-cz="Zdrojový kód předán">Source code delivered</li>
+        <li class="dim" data-en="SIMD / multi-threading" data-cz="SIMD / multi-threading">SIMD / multi-threading</li>
+        <li class="dim" data-en="Performance profiling" data-cz="Profilování výkonu">Performance profiling</li>
+      </ul>
+      <a href="contact.html" class="card-btn card-btn-outline" data-en="Get Started" data-cz="Začít">Get Started</a>
+    </div>
+
+    <!-- Standard — featured -->
+    <div class="price-card standard" style="margin-top: 14px;">
+      <div class="badge-pop" data-en="Most Popular" data-cz="Nejoblíbenější">Most Popular</div>
+      <p class="price-from" data-en="Starting from" data-cz="Od">Starting from</p>
+      <div class="flex items-end gap-2 mb-5">
+        <span class="price-amount">4 000</span>
+        <span class="text-zinc-500 text-sm mb-2">CZK</span>
+      </div>
+      <p class="text-[9px] text-indigo-400 uppercase tracking-widest mb-1" data-en="Standard" data-cz="Standardní">Standard</p>
+      <p class="text-white font-bold text-sm mb-6" data-en="Full module or library" data-cz="Celý modul nebo knihovna">Full module or library</p>
+      <ul class="feat-list flex-1 mb-8">
+        <li data-en="Up to ~1 000 lines" data-cz="Až ~1 000 řádků">Up to ~1 000 lines</li>
+        <li data-en="2 revision rounds" data-cz="2 kola revizí">2 revision rounds</li>
+        <li data-en="Source + build instructions" data-cz="Zdroj + instrukce ke kompilaci">Source + build instructions</li>
+        <li data-en="Basic performance profiling" data-cz="Základní profilování výkonu">Basic performance profiling</li>
+        <li class="dim" data-en="SIMD / AVX2 optimization" data-cz="SIMD / AVX2 optimalizace">SIMD / AVX2 optimization</li>
+      </ul>
+      <a href="contact.html" class="card-btn card-btn-filled" data-en="Get Started" data-cz="Začít">Get Started</a>
+    </div>
+
+    <!-- Advanced -->
+    <div class="price-card glass">
+      <p class="price-from" data-en="Starting from" data-cz="Od">Starting from</p>
+      <div class="flex items-end gap-2 mb-5">
+        <span class="price-amount">9 000</span>
+        <span class="text-zinc-500 text-sm mb-2">CZK</span>
+      </div>
+      <p class="text-[9px] text-zinc-600 uppercase tracking-widest mb-1" data-en="Advanced" data-cz="Pokročilý">Advanced</p>
+      <p class="text-white font-bold text-sm mb-6" data-en="Full engine or complex system" data-cz="Celý engine nebo komplexní systém">Full engine or complex system</p>
+      <ul class="feat-list flex-1 mb-8">
+        <li data-en="Agreed scope upfront" data-cz="Rozsah dohodnut předem">Agreed scope upfront</li>
+        <li data-en="3 revision rounds" data-cz="3 kola revizí">3 revision rounds</li>
+        <li data-en="Source + Makefile + docs" data-cz="Zdroj + Makefile + dokumentace">Source + Makefile + docs</li>
+        <li data-en="Performance profiling" data-cz="Profilování výkonu">Performance profiling</li>
+        <li data-en="SIMD / multi-threading" data-cz="SIMD / multi-threading">SIMD / multi-threading</li>
+      </ul>
+      <a href="contact.html" class="card-btn card-btn-outline" data-en="Get Started" data-cz="Začít">Get Started</a>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2 — Desktop Apps
+  ═══════════════════════════════════════ -->
+  <div class="reveal flex items-center gap-4 mb-8">
+    <div class="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-base">🖥️</div>
+    <div>
+      <p class="text-[9px] text-zinc-600 uppercase tracking-widest" data-en="Category 02" data-cz="Kategorie 02">Category 02</p>
+      <h2 class="text-lg font-bold uppercase tracking-tight" data-en="Desktop Applications" data-cz="Desktopové aplikace">Desktop Applications</h2>
+    </div>
+  </div>
+
+  <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+
+    <!-- Basic -->
+    <div class="price-card glass">
+      <p class="price-from" data-en="Starting from" data-cz="Od">Starting from</p>
+      <div class="flex items-end gap-2 mb-5">
+        <span class="price-amount">2 500</span>
+        <span class="text-zinc-500 text-sm mb-2">CZK</span>
+      </div>
+      <p class="text-[9px] text-zinc-600 uppercase tracking-widest mb-1" data-en="Basic" data-cz="Základní">Basic</p>
+      <p class="text-white font-bold text-sm mb-6" data-en="Simple single-window app" data-cz="Jednoduchá jednookénková aplikace">Simple single-window app</p>
+      <ul class="feat-list flex-1 mb-8">
+        <li data-en="C++ or C# / .NET" data-cz="C++ nebo C# / .NET">C++ or C# / .NET</li>
+        <li data-en="Basic UI, no custom design" data-cz="Základní UI, bez vlastního designu">Basic UI, no custom design</li>
+        <li data-en="1 revision round" data-cz="1 kolo revizí">1 revision round</li>
+        <li data-en="Windows binary delivered" data-cz="Windows spustitelný soubor">Windows binary delivered</li>
+        <li class="dim" data-en="Custom graphics / SDL2" data-cz="Vlastní grafika / SDL2">Custom graphics / SDL2</li>
+      </ul>
+      <a href="contact.html" class="card-btn card-btn-outline" data-en="Get Started" data-cz="Začít">Get Started</a>
+    </div>
+
+    <!-- Pro — featured -->
+    <div class="price-card standard" style="margin-top:14px;">
+      <div class="badge-pop" data-en="Most Popular" data-cz="Nejoblíbenější">Most Popular</div>
+      <p class="price-from" data-en="Starting from" data-cz="Od">Starting from</p>
+      <div class="flex items-end gap-2 mb-5">
+        <span class="price-amount">6 000</span>
+        <span class="text-zinc-500 text-sm mb-2">CZK</span>
+      </div>
+      <p class="text-[9px] text-indigo-400 uppercase tracking-widest mb-1" data-en="Pro" data-cz="Pro">Pro</p>
+      <p class="text-white font-bold text-sm mb-6" data-en="Multi-window feature-rich app" data-cz="Víceoknová aplikace s funkcemi">Multi-window feature-rich app</p>
+      <ul class="feat-list flex-1 mb-8">
+        <li data-en="C++ / SDL2 or C# / .NET" data-cz="C++ / SDL2 nebo C# / .NET">C++ / SDL2 or C# / .NET</li>
+        <li data-en="Custom UI design" data-cz="Vlastní UI design">Custom UI design</li>
+        <li data-en="2 revision rounds" data-cz="2 kola revizí">2 revision rounds</li>
+        <li data-en="Windows + Linux binaries" data-cz="Windows + Linux spustitelné">Windows + Linux binaries</li>
+        <li data-en="Basic installer" data-cz="Základní instalátor">Basic installer</li>
+      </ul>
+      <a href="contact.html" class="card-btn card-btn-filled" data-en="Get Started" data-cz="Začít">Get Started</a>
+    </div>
+
+    <!-- Custom -->
+    <div class="price-card glass">
+      <p class="price-from" data-en="Discuss pricing" data-cz="Cena dohodou">Discuss pricing</p>
+      <div class="flex items-end gap-2 mb-5">
+        <span class="price-amount text-indigo-400">Custom</span>
+      </div>
+      <p class="text-[9px] text-zinc-600 uppercase tracking-widest mb-1" data-en="Custom" data-cz="Na míru">Custom</p>
+      <p class="text-white font-bold text-sm mb-6" data-en="Real-time graphics or game engine" data-cz="Real-time grafika nebo herní engine">Real-time graphics or game engine</p>
+      <ul class="feat-list flex-1 mb-8">
+        <li data-en="SDL2 / OpenGL rendering" data-cz="SDL2 / OpenGL vykreslování">SDL2 / OpenGL rendering</li>
+        <li data-en="Physics / simulation systems" data-cz="Fyzikální / simulační systémy">Physics / simulation systems</li>
+        <li data-en="Unlimited revisions in scope" data-cz="Neomezené revize v rozsahu">Unlimited revisions in scope</li>
+        <li data-en="Full documentation" data-cz="Plná dokumentace">Full documentation</li>
+        <li data-en="All platforms" data-cz="Všechny platformy">All platforms</li>
+      </ul>
+      <a href="contact.html" class="card-btn card-btn-outline" data-en="Discuss Project" data-cz="Probrat projekt">Discuss Project</a>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════
+       SECTION 3 — Teaching
+  ═══════════════════════════════════════ -->
+  <div class="reveal flex items-center gap-4 mb-8">
+    <div class="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-base">📡</div>
+    <div>
+      <p class="text-[9px] text-zinc-600 uppercase tracking-widest" data-en="Category 03" data-cz="Kategorie 03">Category 03</p>
+      <h2 class="text-lg font-bold uppercase tracking-tight" data-en="Tech Teaching / Tutoring" data-cz="Výuka technologií">Tech Teaching / Tutoring</h2>
+    </div>
+  </div>
+
+  <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+
+    <!-- Single session -->
+    <div class="price-card glass">
+      <p class="price-from" data-en="Starting from" data-cz="Od">Starting from</p>
+      <div class="flex items-end gap-2 mb-5">
+        <span class="price-amount">300</span>
+        <span class="text-zinc-500 text-sm mb-2">CZK / hr</span>
+      </div>
+      <p class="text-[9px] text-zinc-600 uppercase tracking-widest mb-1" data-en="Single Session" data-cz="Jednorázová lekce">Single Session</p>
+      <p class="text-white font-bold text-sm mb-6" data-en="One-off help or Q&amp;A" data-cz="Jednorázová pomoc nebo Q&amp;A">One-off help or Q&amp;A</p>
+      <ul class="feat-list flex-1 mb-8">
+        <li data-en="1 hour via Discord / meet" data-cz="1 hodina přes Discord / meet">1 hour via Discord / meet</li>
+        <li data-en="C++, Linux, Git, basics" data-cz="C++, Linux, Git, základy">C++, Linux, Git, basics</li>
+        <li data-en="Screen share + live coding" data-cz="Sdílení obrazovky + live coding">Screen share + live coding</li>
+        <li class="dim" data-en="Follow-up materials" data-cz="Materiály po hodině">Follow-up materials</li>
+        <li class="dim" data-en="Structured curriculum" data-cz="Strukturovaný plán">Structured curriculum</li>
+      </ul>
+      <a href="contact.html" class="card-btn card-btn-outline" data-en="Book Session" data-cz="Rezervovat">Book Session</a>
+    </div>
+
+    <!-- Package — featured -->
+    <div class="price-card standard" style="margin-top:14px;">
+      <div class="badge-pop" data-en="Best Value" data-cz="Nejlepší cena">Best Value</div>
+      <p class="price-from" data-en="Starting from" data-cz="Od">Starting from</p>
+      <div class="flex items-end gap-2 mb-5">
+        <span class="price-amount">1 200</span>
+        <span class="text-zinc-500 text-sm mb-2">CZK</span>
+      </div>
+      <p class="text-[9px] text-indigo-400 uppercase tracking-widest mb-1" data-en="5-Hour Package" data-cz="Balíček 5 hodin">5-Hour Package</p>
+      <p class="text-white font-bold text-sm mb-6" data-en="Structured learning block" data-cz="Strukturovaný výukový blok">Structured learning block</p>
+      <ul class="feat-list flex-1 mb-8">
+        <li data-en="5× 1-hour sessions" data-cz="5× 1-hodinová lekce">5× 1-hour sessions</li>
+        <li data-en="Custom topic plan" data-cz="Vlastní plán témat">Custom topic plan</li>
+        <li data-en="C++, Linux, Git, basics" data-cz="C++, Linux, Git, základy">C++, Linux, Git, basics</li>
+        <li data-en="Follow-up notes after each" data-cz="Poznámky po každé hodině">Follow-up notes after each</li>
+        <li data-en="Flexible scheduling" data-cz="Flexibilní harmonogram">Flexible scheduling</li>
+      </ul>
+      <a href="contact.html" class="card-btn card-btn-filled" data-en="Book Package" data-cz="Rezervovat balíček">Book Package</a>
+    </div>
+
+    <!-- Custom curriculum -->
+    <div class="price-card glass">
+      <p class="price-from" data-en="Discuss pricing" data-cz="Cena dohodou">Discuss pricing</p>
+      <div class="flex items-end gap-2 mb-5">
+        <span class="price-amount text-indigo-400">Custom</span>
+      </div>
+      <p class="text-[9px] text-zinc-600 uppercase tracking-widest mb-1" data-en="Full Curriculum" data-cz="Kompletní kurz">Full Curriculum</p>
+      <p class="text-white font-bold text-sm mb-6" data-en="Long-term learning program" data-cz="Dlouhodobý výukový program">Long-term learning program</p>
+      <ul class="feat-list flex-1 mb-8">
+        <li data-en="Tailored to your goals" data-cz="Přizpůsobeno vašim cílům">Tailored to your goals</li>
+        <li data-en="Written curriculum included" data-cz="Písemný plán zahrnut">Written curriculum included</li>
+        <li data-en="Weekly sessions" data-cz="Týdenní lekce">Weekly sessions</li>
+        <li data-en="Practice projects" data-cz="Praktické projekty">Practice projects</li>
+        <li data-en="Progress tracking" data-cz="Sledování pokroku">Progress tracking</li>
+      </ul>
+      <a href="contact.html" class="card-btn card-btn-outline" data-en="Discuss" data-cz="Probrat">Discuss</a>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── CTA Banner ──────────────────────────────────────────── -->
+  <div class="reveal glass rounded-[2rem] p-10 md:p-16 text-center relative overflow-hidden">
+    <div class="scan-line"></div>
+    <p class="section-label justify-center" data-en="// Not sure?" data-cz="// Nevíš si rady?">// Not sure?</p>
+    <h2 class="text-3xl md:text-6xl font-bold uppercase tracking-tighter mb-5 leading-[0.9]">
+      <span data-en="Let's talk" data-cz="Pojďme si">Let's talk</span>
+      <span class="serif-italic normal-case font-normal text-indigo-400" data-en=" first." data-cz=" promluvit."> first.</span>
+    </h2>
+    <p class="text-zinc-500 text-sm mb-10 max-w-md mx-auto leading-relaxed"
+       data-en="Every project is different. Describe what you need and I'll give you an honest quote — no hidden costs."
+       data-cz="Každý projekt je jiný. Popiš co potřebuješ a dostaneš upřímnou nabídku — bez skrytých poplatků.">
+      Every project is different. Describe what you need and I'll give you an honest quote — no hidden costs.
+    </p>
+    <a href="contact.html"
+       class="inline-block bg-indigo-600 hover:bg-white hover:text-black text-white font-bold uppercase tracking-widest text-xs px-10 py-4 rounded-full transition-all"
+       data-en="Open a Channel →" data-cz="Napiš mi →">Open a Channel →</a>
+  </div>
+
+  <footer class="mt-10 py-5 border-t border-white/5 flex justify-between text-zinc-700">
+    <p class="text-[9px] uppercase tracking-[0.25em]" data-en="Prices in CZK · Subject to change" data-cz="Ceny v CZK · Mohou se měnit">Prices in CZK · Subject to change</p>
+    <p class="text-[9px] uppercase tracking-[0.2em]">© 2026 ROOT_ACCESS_GRANTED</p>
+  </footer>
+</main>
+
+<script src="ui-logic.js"></script>
+</body>
+</html>

@@ -1,114 +1,119 @@
-// --- NETWORK SHADER BACKGROUND ---
-const canvas = document.getElementById('bg-canvas');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let points = [];
-    const init = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        points = Array.from({ length: 45 }, () => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4
-        }));
-    };
-    const draw = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = 'rgba(99, 102, 241, 0.12)';
-        points.forEach((p, i) => {
-            p.x += p.vx; p.y += p.vy;
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-            points.slice(i + 1).forEach(p2 => {
-                let d = Math.hypot(p.x - p2.x, p.y - p2.y);
-                if (d < 180) {
-                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-                }
-            });
-        });
-        requestAnimationFrame(draw);
-    };
-    init(); draw();
-    window.addEventListener('resize', init);
-}
+/* ============================================================
+   ui-logic.js — shared across all pages
+   Handles: particle canvas, ping, geolocation, nav active,
+            GSAP reveals, CZ/EN language switching
+   ============================================================ */
 
-// --- FAST GSAP REVEAL ---
-window.addEventListener('load', () => {
-    gsap.to(".reveal", { 
-        duration: 0.6,    // Fast duration
-        opacity: 1, 
-        y: 0, 
-        stagger: 0.05,    // Fast sequence
-        ease: "power2.out",
-        delay: 0.1
+// ── Canvas particle background ───────────────────────────────
+(function initCanvas() {
+  const canvas = document.getElementById('bg-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random() * 2000, y: Math.random() * 1200,
+      r: Math.random() * 1.2 + 0.3,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18,
+      alpha: Math.random() * 0.3 + 0.05,
     });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(99,102,241,${p.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Fake latency ping ────────────────────────────────────────
+(function initPing() {
+  const el = document.getElementById('ping-stat');
+  if (!el) return;
+  function update() {
+    el.textContent = Math.floor(Math.random() * 18 + 4) + 'ms';
+    setTimeout(update, 2000 + Math.random() * 1500);
+  }
+  update();
+})();
+
+// ── Geolocation display ──────────────────────────────────────
+(function initLocation() {
+  const el = document.getElementById('location-stat');
+  if (!el) return;
+  fetch('https://ip-api.com/json/?fields=city,country')
+    .then(r => r.json())
+    .then(d => { if (d.city) el.textContent = d.city + ', ' + d.country; })
+    .catch(() => { el.textContent = 'CZ_ORIGIN'; });
+})();
+
+// ── Active nav highlight ─────────────────────────────────────
+(function initNav() {
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-item').forEach(a => {
+    const href = (a.getAttribute('href') || '').split('/').pop();
+    if (href === path) a.classList.add('active-page');
+  });
+})();
+
+// ── GSAP scroll reveals ───────────────────────────────────────
+window.addEventListener('load', function () {
+  if (typeof gsap === 'undefined') return;
+  gsap.fromTo('.reveal',
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 0.75, stagger: 0.09, ease: 'power3.out' }
+  );
 });
 
-// --- NAV HIGHLIGHTING ---
-function highlightActivePage() {
-    const path = window.location.pathname.toLowerCase();
-    const navLinks = document.querySelectorAll('.nav-item');
+// ── CZ / EN Language Switcher ────────────────────────────────
+(function initLang() {
+  // Detect saved preference, default to EN
+  const saved = localStorage.getItem('lang') || 'en';
+  applyLang(saved);
 
-    navLinks.forEach(link => {
-        // Get the href and clean it (e.g., "works.html" -> "works")
-        const href = link.getAttribute('href').toLowerCase();
-        const cleanHref = href.replace('.html', '').replace('./', '');
+  // Wire up toggle buttons
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('[data-lang]');
+    if (!btn) return;
+    const lang = btn.dataset.lang;
+    localStorage.setItem('lang', lang);
+    applyLang(lang);
+  });
 
-        // Reset classes
-        link.classList.remove('active-page', 'text-indigo-400', 'font-bold');
-        link.classList.add('text-zinc-400');
-
-        // Logic:
-        // 1. If path is "/" and link is "index", it's Home.
-        // 2. If the path contains the link's name (e.g., "/works" contains "works"), it's a match.
-        const isHome = (path === '/' || path.includes('index')) && cleanHref === 'index';
-        const isMatch = path.includes(cleanHref) && cleanHref !== 'index';
+  function applyLang(lang) {
+    // Update toggle button active state
+    document.querySelectorAll('[data-lang]').forEach(btn => {
+      const isActive = btn.dataset.lang === lang;
+      btn.classList.toggle('lang-active', isActive);
+      btn.classList.toggle('lang-inactive', !isActive);
     });
-}
 
-// --- PING SIMULATOR ---
-function updatePing() {
-    const pingElement = document.getElementById('ping-stat');
-    if(pingElement) {
-        const jitter = Math.floor(Math.random() * 15);
-        pingElement.innerText = `${24 + jitter}ms`;
-    }
-}
+    // Translate all elements with data-en / data-cz attributes
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.textContent = lang === 'cz'
+        ? (el.dataset.cz || el.dataset.en)
+        : el.dataset.en;
+    });
 
-async function getIPLocation() {
-    const locElement = document.getElementById('location-stat');
-    if (!locElement) return;
-
-    // List of reliable, free APIs that don't require keys
-    const apis = [
-        'https://ipapi.co/json/',
-        'https://ipwho.is/',
-        'https://freeipapi.com/api/json'
-    ];
-
-    for (let api of apis) {
-        try {
-            const response = await fetch(api);
-            if (!response.ok) continue;
-            const data = await response.json();
-            
-            // Handle different data formats from different APIs
-            const city = data.city || data.cityName || "Unknown";
-            const country = data.country_code || data.countryCode || "Node";
-            
-            locElement.innerText = `${city.toUpperCase()}, ${country}`;
-            return; // Exit function if successful
-        } catch (e) {
-            console.warn(`Failed to fetch from ${api}, trying next...`);
-        }
-    }
-    locElement.innerText = "LOCAL_HOST";
-}
-
-// Initialize System
-document.addEventListener('DOMContentLoaded', () => {
-    highlightActivePage();
-    getIPLocation();
-    setInterval(updatePing, 1500);
-});
+    // Store on <html> for CSS targeting if needed
+    document.documentElement.setAttribute('data-lang', lang);
+  }
+})();
