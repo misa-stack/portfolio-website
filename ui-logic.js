@@ -1,10 +1,4 @@
-/* ============================================================
-   ui-logic.js — shared across all pages
-   Handles: particle canvas, ping, geolocation, nav active,
-            GSAP reveals, CZ/EN language switching
-   ============================================================ */
 
-// ── Canvas particle background ───────────────────────────────
 (function initCanvas() {
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
@@ -89,7 +83,6 @@ window.addEventListener('load', function () {
   const saved = localStorage.getItem('lang') || 'en';
   applyLang(saved);
 
-  // Wire up toggle buttons
   document.addEventListener('click', function(e) {
     const btn = e.target.closest('[data-lang]');
     if (!btn) return;
