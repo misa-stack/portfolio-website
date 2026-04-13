@@ -1,152 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>misa-stack | Contact</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 17 10 11 4 5'%3E%3C/polyline%3E%3Cline x1='12' y1='19' x2='20' y2='19'%3E%3C/line%3E%3C/svg%3E">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-  <style>
-    :root{--accent:#6366f1;}*{box-sizing:border-box;}
-    body{background:#050505;color:#e4e4e7;font-family:'Space Mono',monospace;overflow-x:hidden;min-height:100vh;}
-    .glass{background:rgba(255,255,255,0.02);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.07);transition:border-color .4s;}
-    .reveal{opacity:1;}
-    .nav-item{position:relative;transition:color .3s;}
-    .active-page{color:#818cf8 !important;font-weight:700;}
-    .active-page::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);}
-    .lang-active{color:#818cf8 !important;font-weight:700;}
-    .lang-inactive{color:#52525b;}
-    .lang-inactive:hover{color:#a1a1aa;}
-    .serif-italic{font-family:'DM Serif Display',serif;font-style:italic;}
-    .scan-line{width:100%;height:2px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--accent),transparent);position:absolute;top:0;left:0;animation:scan 4s linear infinite;opacity:.2;}
-    @keyframes scan{0%{top:0}100%{top:100%}}
-    .contact-card{transition:border-color .3s,background .3s,transform .3s;}
-    .contact-card:hover{transform:translateY(-5px);}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>misa-stack | Contact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+:root{
+  --col:#e11d48;
+  --col-dim:rgba(225,29,72,0.1);
+  --col-border:rgba(225,29,72,0.25);
+  --bg:#04050a;
+  --border:rgba(255,255,255,0.07);
+  --border-h:rgba(255,255,255,0.13);
+  --text-1:#e2e2e8;
+  --text-2:#64646e;
+  --text-3:#2e2e35;
+  --r:1.5rem;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;}
+body{
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse 65% 50% at 15% 25%, rgba(136,19,55,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 55% at 85% 75%, rgba(100,10,35,0.10) 0%, transparent 55%);
+  color:var(--text-1);font-family:'Space Mono',monospace;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  min-height:100dvh;display:flex;flex-direction:column;
+}
+#nav-pill{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:200;display:flex;align-items:center;background:rgba(4,5,10,0.94);border:1px solid rgba(255,255,255,0.08);border-radius:99px;padding:10px 20px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 2px 20px rgba(0,0,0,0.6);white-space:nowrap;}
+.pd{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pd 2s infinite;flex-shrink:0;}
+@keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
+.nl{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--text-1);text-decoration:none;text-transform:uppercase;margin:0 10px;}
+.ns{width:1px;height:14px;background:rgba(255,255,255,0.08);margin:0 6px;flex-shrink:0;}
+.na{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-2);text-decoration:none;padding:3px 9px;border-radius:99px;transition:color .2s,background .2s;}
+.na:hover{color:var(--text-1);background:rgba(255,255,255,0.05);}
+.na.cur{color:var(--text-1);font-weight:700;}
+.lb{font-size:10px;text-transform:uppercase;letter-spacing:.1em;background:none;border:none;cursor:pointer;color:var(--text-3);transition:color .2s;padding:2px 4px;}
+.lb.on{color:var(--text-1);font-weight:700;}
+.lsp{font-size:10px;color:var(--text-3);margin:0 1px;}
+.monly{display:none;}
+@media(max-width:768px){.donly{display:none!important;}.monly{display:flex!important;}}
+#menu-btn{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;}
+.bar{display:block;width:20px;height:1.5px;background:var(--text-2);border-radius:2px;transform-origin:center;transition:transform .3s cubic-bezier(.23,1,.32,1),opacity .25s;}
+#mobile-menu{position:fixed;inset:0;z-index:150;background:rgba(4,5,10,0.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.23,1,.32,1);}
+#mobile-menu.open{opacity:1;pointer-events:auto;}
+.mml{font-size:clamp(2rem,8vw,3rem);font-weight:700;text-transform:uppercase;letter-spacing:-.02em;color:var(--text-3);text-decoration:none;transition:color .2s;transform:translateY(20px);opacity:0;}
+#mobile-menu.open .mml{animation:su .5s cubic-bezier(.23,1,.32,1) forwards;}
+#mobile-menu.open .mml:nth-child(1){animation-delay:.05s;}#mobile-menu.open .mml:nth-child(2){animation-delay:.1s;}#mobile-menu.open .mml:nth-child(3){animation-delay:.15s;}#mobile-menu.open .mml:nth-child(4){animation-delay:.2s;}#mobile-menu.open .mml:nth-child(5){animation-delay:.25s;}
+.mml:hover{color:var(--text-1);}.mml.cur{color:var(--col);}
+@keyframes su{to{transform:translateY(0);opacity:1;}}
+.reveal{opacity:1;}
+.serif{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;}
+
+.cc{border-radius:var(--r);padding:clamp(22px,3vw,32px);display:flex;flex-direction:column;gap:14px;text-decoration:none;background:rgba(255,255,255,0.025);border:1px solid var(--border);transition:background .25s,border-color .25s,transform .25s;}
+.cc:hover{background:rgba(255,255,255,0.04);border-color:var(--border-h);transform:translateY(-5px);}
+.cc:active{transform:translateY(-2px) scale(0.98);}
+.cc.pri{background:rgba(225,29,72,0.15);border-color:var(--col-border);}
+.cc.pri:hover{background:rgba(225,29,72,0.22);border-color:var(--col);}
+.cc-num{font-size:8px;text-transform:uppercase;letter-spacing:.2em;color:var(--text-3);}
+.cc.pri .cc-num{color:rgba(251,113,133,0.55);}
+.cc-name{font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;}
+.cc.pri .cc-name{color:#fb7185;}
+.cc-sub{font-size:11px;color:var(--text-2);}
+.cc.pri .cc-sub{color:rgba(251,113,133,0.6);}
+.arr{font-size:16px;color:var(--text-3);transition:transform .2s,color .2s;}
+.cc:hover .arr{transform:translate(3px,-3px);color:var(--text-2);}
+.cc.pri .arr{color:rgba(251,113,133,0.5);}
+.cc.pri:hover .arr{color:#fb7185;}
+@media(max-width:600px){.cgrid{grid-template-columns:1fr!important;}}
+</style>
 </head>
-<body class="antialiased">
-<canvas id="bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
+<body>
 
-<nav class="fixed top-0 left-0 w-full z-50 px-4 md:px-6 py-4">
-  <div class="max-w-7xl mx-auto glass rounded-full px-5 md:px-8 py-3 flex justify-between items-center">
-    <div class="flex items-center gap-5">
-      <div class="flex items-center gap-2 border-r border-white/10 pr-5">
-        <div class="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
-        <a href="index.html" class="text-sm font-bold tracking-tighter text-indigo-500 uppercase">System.Root</a>
-      </div>
-      <div class="hidden sm:flex gap-5">
-        <div class="flex flex-col"><span class="text-[7px] uppercase tracking-widest text-zinc-700">Ping</span><span id="ping-stat" class="text-[11px] text-indigo-400 font-bold">--ms</span></div>
-        <div class="flex flex-col"><span class="text-[7px] uppercase tracking-widest text-zinc-700">Origin</span><span id="location-stat" class="text-[11px] text-white font-bold">...</span></div>
-      </div>
-    </div>
-    <div class="flex items-center gap-5 md:gap-7">
-      <div id="nav-container" class="flex gap-3 md:gap-6 text-[10px] uppercase tracking-widest text-zinc-500">
-        <a href="index.html"   class="nav-item hover:text-white transition-colors" data-en="Home"    data-cz="Domů">Home</a>
-        <a href="about.html"   class="nav-item hover:text-white transition-colors" data-en="About"   data-cz="O mně">About</a>
-        <a href="works.html"   class="nav-item hover:text-white transition-colors" data-en="Works"   data-cz="Projekty">Works</a>
-        <a href="pricing.html" class="nav-item hover:text-white transition-colors" data-en="Pricing" data-cz="Ceník">Pricing</a>
-        <a href="contact.html" class="nav-item hover:text-white transition-colors" data-en="Contact" data-cz="Kontakt">Contact</a>
-      </div>
-      <div class="flex items-center gap-1 border-l border-white/10 pl-5">
-        <button data-lang="en" class="lang-inactive text-[10px] uppercase tracking-widest transition-colors cursor-pointer px-1">EN</button>
-        <span class="text-zinc-700 text-[10px]">/</span>
-        <button data-lang="cz" class="lang-inactive text-[10px] uppercase tracking-widest transition-colors cursor-pointer px-1">CZ</button>
-      </div>
+<div id="mobile-menu" role="dialog">
+  <a href="index.html"   class="mml"     data-en="Home"     data-cz="Domů">Home</a>
+  <a href="about.html"   class="mml"     data-en="About"    data-cz="O mně">About</a>
+  <a href="works.html"   class="mml"     data-en="Works"    data-cz="Projekty">Works</a>
+  <a href="pricing.html" class="mml"     data-en="Services" data-cz="Služby">Services</a>
+  <a href="contact.html" class="mml cur" data-en="Contact"  data-cz="Kontakt">Contact</a>
+  <div style="display:flex;gap:16px;margin-top:1rem;">
+    <button class="lb" data-lang="en" style="cursor:pointer;font-size:12px;">EN</button>
+    <span style="color:#2e2e35;">|</span>
+    <button class="lb" data-lang="cz" style="cursor:pointer;font-size:12px;">CZ</button>
+  </div>
+</div>
+
+<div id="nav-pill">
+  <div class="pd"></div>
+  <a href="index.html" class="nl">misa-stack</a>
+  <div class="ns"></div>
+  <div class="donly" style="display:flex;align-items:center;gap:0;">
+    <a href="index.html"   class="na"     data-en="Home"     data-cz="Domů">Home</a>
+    <a href="about.html"   class="na"     data-en="About"    data-cz="O mně">About</a>
+    <a href="works.html"   class="na"     data-en="Works"    data-cz="Projekty">Works</a>
+    <a href="pricing.html" class="na"     data-en="Services" data-cz="Služby">Services</a>
+    <a href="contact.html" class="na cur" data-en="Contact"  data-cz="Kontakt">Contact</a>
+    <div class="ns"></div>
+    <button class="lb" data-lang="en">EN</button>
+    <span class="lsp">/</span>
+    <button class="lb" data-lang="cz">CZ</button>
+  </div>
+  <button id="menu-btn" class="monly" style="margin-left:8px;">
+    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+  </button>
+</div>
+
+<main style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1280px;margin:0 auto;padding:90px 16px 32px;width:100%;">
+
+  <div class="reveal" style="display:flex;justify-content:center;margin-bottom:clamp(24px,4vw,48px);">
+    <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border:1px solid var(--col-border);border-radius:99px;background:var(--col-dim);">
+      <div style="width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pd 2s infinite;"></div>
+      <span style="font-size:9px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;" data-en="Remote_Access: Available" data-cz="Vzdálený_Přístup: Dostupný">Remote_Access: Available</span>
     </div>
   </div>
-</nav>
 
-<main class="min-h-screen flex flex-col justify-center px-4 md:px-6 pb-10" style="padding-top:80px;">
-  <div class="max-w-5xl mx-auto w-full">
-
-    <div class="reveal flex justify-center mb-10">
-      <div class="inline-flex items-center gap-2 px-4 py-2 border border-indigo-500/30 rounded-full">
-        <div class="h-1.5 w-1.5 bg-green-400 rounded-full animate-pulse"></div>
-        <span class="text-[10px] text-indigo-400 uppercase tracking-[0.2em]"
-              data-en="Remote_Access: Available" data-cz="Vzdálený_Přístup: Dostupný">Remote_Access: Available</span>
-      </div>
-    </div>
-
-    <div class="reveal text-center mb-5">
-      <h1 class="text-[14vw] sm:text-[10vw] md:text-[8rem] font-bold uppercase tracking-tighter leading-[0.85]">
-        <span data-en="Let's" data-cz="Pojď">Let's</span><br>
-        <span class="text-indigo-500 serif-italic normal-case font-normal"
-              data-en="solve it." data-cz="to vyřešit.">solve it.</span>
-      </h1>
-    </div>
-
-    <p class="reveal text-center text-zinc-600 mb-14 text-xs tracking-[0.35em] uppercase"
-       data-en="[ Establishing Secure Handshake... ]" data-cz="[ Navazuji zabezpečené spojení... ]">
-      [ Establishing Secure Handshake... ]
-    </p>
-
-    <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-5">
-
-      <a href="https://github.com/misa-stack" target="_blank"
-         class="contact-card glass rounded-[2rem] p-8 flex flex-col gap-5 hover:bg-white hover:border-white group">
-        <div class="flex items-center justify-between">
-          <span class="text-[9px] text-zinc-600 uppercase tracking-widest group-hover:text-zinc-500"
-                data-en="01 // Code" data-cz="01 // Kód">01 // Code</span>
-          <span class="text-zinc-700 group-hover:text-black text-xl">↗</span>
-        </div>
-        <div>
-          <p class="text-2xl font-bold uppercase tracking-tight group-hover:text-black transition-colors">GitHub</p>
-          <p class="text-xs text-zinc-500 group-hover:text-zinc-600 mt-2">github.com/misa-stack</p>
-        </div>
-      </a>
-
-      <a href="https://www.instagram.com/mich.aaa.l/" target="_blank"
-         class="contact-card glass rounded-[2rem] p-8 flex flex-col gap-5 hover:bg-white hover:border-white group">
-        <div class="flex items-center justify-between">
-          <span class="text-[9px] text-zinc-600 uppercase tracking-widest group-hover:text-zinc-500"
-                data-en="02 // Social" data-cz="02 // Sociální">02 // Social</span>
-          <span class="text-zinc-700 group-hover:text-black text-xl">↗</span>
-        </div>
-        <div>
-          <p class="text-2xl font-bold uppercase tracking-tight group-hover:text-black transition-colors">Instagram</p>
-          <p class="text-xs text-zinc-500 group-hover:text-zinc-600 mt-2">@mich.aaa.l</p>
-        </div>
-      </a>
-
-      <!-- Plain mailto — not obfuscated -->
-      <a href="mailto:mismichal.k@gmail.com"
-         class="contact-card rounded-[2rem] p-8 flex flex-col gap-5 bg-indigo-600 border border-indigo-500 hover:bg-white hover:border-white group"
-         style="box-shadow:0 20px 60px rgba(99,102,241,0.25);">
-        <div class="flex items-center justify-between">
-          <span class="text-[9px] text-indigo-200 group-hover:text-zinc-500 uppercase tracking-widest"
-                data-en="03 // Direct" data-cz="03 // Přímý">03 // Direct</span>
-          <span class="text-indigo-200 group-hover:text-black text-xl">✉</span>
-        </div>
-        <div>
-          <p class="text-2xl font-bold uppercase tracking-tight group-hover:text-black transition-colors"
-             data-en="Email Me" data-cz="Napiš mi">Email Me</p>
-          <p class="text-xs text-indigo-200 group-hover:text-zinc-600 mt-2">mismichal.k&#64;gmail.com</p>
-        </div>
-      </a>
-
-    </div>
-
-    <p class="reveal text-center text-[10px] text-zinc-700 uppercase tracking-widest mt-10"
-       data-en="Response time: usually within 24h · CZ / EN"
-       data-cz="Odpověď: obvykle do 24h · CZ / EN">
-      Response time: usually within 24h · CZ / EN
-    </p>
+  <div class="reveal" style="text-align:center;margin-bottom:clamp(16px,3vw,28px);">
+    <h1 style="font-size:clamp(3.5rem,12vw,10rem);font-weight:700;text-transform:uppercase;letter-spacing:-.03em;line-height:.85;">
+      <span data-en="Let's" data-cz="Pojď">Let's</span><br>
+      <span class="serif" style="color:var(--col);" data-en="solve it." data-cz="to vyřešit.">solve it.</span>
+    </h1>
   </div>
 
-  <footer class="max-w-5xl mx-auto w-full mt-14 pt-5 border-t border-white/5 flex justify-between text-zinc-700">
-    <p class="text-[9px] uppercase tracking-[0.25em]" data-en="Encrypted · Tailwind · GSAP" data-cz="Šifrováno · Tailwind · GSAP">Encrypted · Tailwind · GSAP</p>
-    <p class="text-[9px] uppercase tracking-[0.2em]">© 2026 ROOT_ACCESS_GRANTED</p>
+  <p class="reveal" style="text-align:center;font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.3em;margin-bottom:clamp(28px,5vw,52px);"
+     data-en="[ Establishing Secure Handshake... ]" data-cz="[ Navazuji zabezpečené spojení... ]">
+    [ Establishing Secure Handshake... ]
+  </p>
+
+  <div class="reveal cgrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:780px;margin:0 auto;width:100%;">
+
+    <a href="https://github.com/misa-stack" target="_blank" class="cc">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <p class="cc-num" data-en="01 // Code" data-cz="01 // Kód">01 // Code</p>
+        <span class="arr">↗</span>
+      </div>
+      <div>
+        <p class="cc-name">GitHub</p>
+        <p class="cc-sub">github.com/misa-stack</p>
+      </div>
+    </a>
+
+    <a href="https://www.instagram.com/mich.aaa.l/" target="_blank" class="cc">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <p class="cc-num" data-en="02 // Social" data-cz="02 // Sociální">02 // Social</p>
+        <span class="arr">↗</span>
+      </div>
+      <div>
+        <p class="cc-name">Instagram</p>
+        <p class="cc-sub">@mich.aaa.l</p>
+      </div>
+    </a>
+
+    <a href="mailto:mismichal.k@gmail.com" class="cc pri">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <p class="cc-num" data-en="03 // Direct" data-cz="03 // Přímý">03 // Direct</p>
+        <span class="arr">✉</span>
+      </div>
+      <div>
+        <p class="cc-name" data-en="Email Me" data-cz="Napiš mi">Email Me</p>
+        <p class="cc-sub">mismichal.k&#64;gmail.com</p>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="reveal" style="text-align:center;font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.2em;margin-top:clamp(20px,4vw,36px);"
+     data-en="Response: usually within 24h · CZ / EN"
+     data-cz="Odpověď: obvykle do 24h · CZ / EN">
+    Response: usually within 24h · CZ / EN
+  </p>
+
+  <footer style="margin-top:auto;padding-top:24px;border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:clamp(32px,5vw,64px);">
+    <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.2em;" data-en="Encrypted · Space Mono · GSAP" data-cz="Šifrováno · Space Mono · GSAP">Encrypted · Space Mono · GSAP</p>
+    <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em;">© 2026 misa-stack</p>
   </footer>
 </main>
 
-<script src="ui-logic.js"></script>
 <script>
-  window.addEventListener('load', () => {
-    if (typeof gsap !== 'undefined') gsap.fromTo('.reveal',{opacity:0,y:18},{opacity:1,y:0,duration:.7,stagger:.1,ease:'power3.out'});
+(function(){
+  const saved=localStorage.getItem('lang')||'en';
+  function apply(lang){
+    document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=lang==='cz'?(el.dataset.cz||el.dataset.en):el.dataset.en;});
+    document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.dataset.lang===lang));
+    localStorage.setItem('lang',lang);
+  }
+  apply(saved);
+  document.querySelectorAll('.lb').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.lang)));
+  window.addEventListener('load',()=>{
+    if(typeof gsap!=='undefined')gsap.fromTo('.reveal',{opacity:0,y:18},{opacity:1,y:0,duration:.7,stagger:.1,ease:'power3.out'});
   });
+  const btn=document.getElementById('menu-btn');
+  const menu=document.getElementById('mobile-menu');
+  if(btn&&menu){
+    let open=false;
+    btn.addEventListener('click',()=>{
+      open=!open;menu.classList.toggle('open',open);
+      const bars=btn.querySelectorAll('.bar');
+      if(open){bars[0].style.transform='translateY(6px) rotate(45deg)';bars[1].style.opacity='0';bars[2].style.transform='translateY(-6px) rotate(-45deg)';}
+      else{bars[0].style.transform='';bars[1].style.opacity='';bars[2].style.transform='';}
+    });
+  }
+})();
 </script>
 </body>
 </html>

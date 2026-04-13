@@ -1,4 +1,9 @@
+/* ============================================================
+   ui-logic.js — shared across all pages
+   Canvas, ping, geo, nav active, CZ/EN switcher, mobile menu
+   ============================================================ */
 
+// ── Canvas particle background ───────────────────────────────
 (function initCanvas() {
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
@@ -12,17 +17,17 @@
   resize();
   window.addEventListener('resize', resize);
 
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < 70; i++) {
     particles.push({
       x: Math.random() * 2000, y: Math.random() * 1200,
-      r: Math.random() * 1.2 + 0.3,
-      vx: (Math.random() - 0.5) * 0.18,
-      vy: (Math.random() - 0.5) * 0.18,
-      alpha: Math.random() * 0.3 + 0.05,
+      r: Math.random() * 1.0 + 0.3,
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: (Math.random() - 0.5) * 0.15,
+      alpha: Math.random() * 0.25 + 0.04,
     });
   }
 
-  function draw() {
+  (function draw() {
     ctx.clearRect(0, 0, W, H);
     particles.forEach(p => {
       p.x += p.vx; p.y += p.vy;
@@ -34,8 +39,7 @@
       ctx.fill();
     });
     requestAnimationFrame(draw);
-  }
-  draw();
+  })();
 })();
 
 // ── Fake latency ping ────────────────────────────────────────
@@ -44,7 +48,7 @@
   if (!el) return;
   function update() {
     el.textContent = Math.floor(Math.random() * 18 + 4) + 'ms';
-    setTimeout(update, 2000 + Math.random() * 1500);
+    setTimeout(update, 2200 + Math.random() * 1500);
   }
   update();
 })();
@@ -68,18 +72,47 @@
   });
 })();
 
-// ── GSAP scroll reveals ───────────────────────────────────────
-window.addEventListener('load', function () {
-  if (typeof gsap === 'undefined') return;
-  gsap.fromTo('.reveal',
-    { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, duration: 0.75, stagger: 0.09, ease: 'power3.out' }
-  );
-});
+// ── Mobile menu ──────────────────────────────────────────────
+(function initMobileMenu() {
+  const btn  = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (!btn || !menu) return;
+
+  let open = false;
+
+  btn.addEventListener('click', () => {
+    open = !open;
+    menu.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', open);
+    // morph hamburger → X
+    const bars = btn.querySelectorAll('.bar');
+    if (open) {
+      bars[0].style.transform = 'translateY(6px) rotate(45deg)';
+      bars[1].style.opacity   = '0';
+      bars[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+    } else {
+      bars[0].style.transform = '';
+      bars[1].style.opacity   = '';
+      bars[2].style.transform = '';
+    }
+  });
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (open && !btn.contains(e.target) && !menu.contains(e.target)) {
+      open = false;
+      menu.classList.remove('menu-open');
+      btn.setAttribute('aria-expanded', false);
+      const bars = btn.querySelectorAll('.bar');
+      bars[0].style.transform = '';
+      bars[1].style.opacity   = '';
+      bars[2].style.transform = '';
+    }
+  });
+})();
 
 // ── CZ / EN Language Switcher ────────────────────────────────
 (function initLang() {
-  // Detect saved preference, default to EN
   const saved = localStorage.getItem('lang') || 'en';
   applyLang(saved);
 
@@ -92,21 +125,24 @@ window.addEventListener('load', function () {
   });
 
   function applyLang(lang) {
-    // Update toggle button active state
     document.querySelectorAll('[data-lang]').forEach(btn => {
-      const isActive = btn.dataset.lang === lang;
-      btn.classList.toggle('lang-active', isActive);
-      btn.classList.toggle('lang-inactive', !isActive);
+      btn.classList.toggle('lang-active',   btn.dataset.lang === lang);
+      btn.classList.toggle('lang-inactive', btn.dataset.lang !== lang);
     });
-
-    // Translate all elements with data-en / data-cz attributes
     document.querySelectorAll('[data-en]').forEach(el => {
       el.textContent = lang === 'cz'
         ? (el.dataset.cz || el.dataset.en)
         : el.dataset.en;
     });
-
-    // Store on <html> for CSS targeting if needed
     document.documentElement.setAttribute('data-lang', lang);
   }
 })();
+
+// ── GSAP reveals ─────────────────────────────────────────────
+window.addEventListener('load', function () {
+  if (typeof gsap === 'undefined') return;
+  gsap.fromTo('.reveal',
+    { opacity: 0, y: 22 },
+    { opacity: 1, y: 0, duration: 0.75, stagger: 0.09, ease: 'power3.out', delay: 0.1 }
+  );
+});
