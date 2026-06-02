@@ -271,7 +271,7 @@ body{
                   <pre style="font-size:8px;line-height:1.4;color:var(--col);opacity:.5;overflow:hidden;max-height:60px;">  ████████████████▓▒░  ░▒▓████████
   ████████▓░  ·:*8*:·  ░▓█████████
   ███████▒  :*88888888*:  ▒████████
-  ██████░  *8888888888888*  ░███████
+  ██████░  *8888888888888* ░███████
            *888888888888888*</pre>
                 </div>
               </div>
@@ -344,10 +344,76 @@ body{
       </div>
     </div>
 
+    <div @click="s!==4?s=4:s=null" :class="s===4?'expanded':''" class="reveal wcard">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;">
+        <div style="flex:1;">
+          <p style="font-size:9px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;" data-en="Artificial Intelligence / Game Dev" data-cz="Umělá inteligence / Vývoj her">Artificial Intelligence / Game Dev</p>
+          <h2 style="font-size:clamp(1.6rem,3.5vw,3rem);font-weight:700;letter-spacing:-.02em;text-transform:uppercase;margin:6px 0 12px;">Chess</h2>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;max-width:580px;"
+             data-en="Interactive chess engine running on SDL graphics. Implements automated bot moves using the Negamax algorithm, Alpha-Beta pruning, and Zobrist hashing for transposition tables."
+             data-cz="Interaktivní šachový engine běžící na grafice SDL. Implementuje automatické tahy bota pomocí algoritmu Negamax, Alpha-Beta prořezávání a Zobristova hashování pro transpoziční tabulky.">
+            Interactive chess engine running on SDL graphics. Implements automated bot moves using the Negamax algorithm, Alpha-Beta pruning, and Zobrist hashing.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;">
+            <span class="sc"><span class="sc-dot" style="background:#f34b7d;"></span>C++ 100.0%</span>
+            <span class="sc">↑ 16 commits</span>
+            <span class="tag">C++</span><span class="tag">SDL</span><span class="tag">Negamax AI</span><span class="tag">Alpha-Beta</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;" @click.stop>
+          <a href="https://github.com/misa-stack/chess" target="_blank" class="gh">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+            GitHub
+          </a>
+          <span style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.12em;cursor:pointer;" @click.stop="s!==4?s=4:s=null" x-text="s===4?'[ Close ]':'[ Expand ]'"></span>
+        </div>
+      </div>
+      <div class="rollout">
+        <div style="padding-top:24px;margin-top:24px;border-top:1px solid rgba(255,255,255,0.06);">
+          <div class="dg">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div class="spec">
+                <p style="font-size:8px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;margin-bottom:12px;">Technical Solutions</p>
+                <p class="sl"><span class="sp">✦ </span><span style="color:var(--text-1);">Negamax Evaluation Tree</span></p>
+                <p class="sl" style="padding-left:14px;" data-en="Recursive algorithmic searches utilizing coordinate position matrices to compute optimal tactics." data-cz="Rekurzivní vyhledávání s maticemi hodnot polí pro nalezení nejvýhodnější taktiky.">Recursive algorithmic searches utilizing coordinate position matrices to compute optimal tactics.</p>
+                <p class="sl" style="margin-top:8px;"><span class="sp">✦ </span><span style="color:var(--text-1);">Alpha-Beta Pruning</span></p>
+                <p class="sl" style="padding-left:14px;" data-en="Trims irrelevant sub-trees efficiently to maximize depth computation under critical loop constraints." data-cz="Efektivně prořezává irelevantní větve pro dosažení větší hloubky prohledávání.">Trims irrelevant sub-trees efficiently to maximize depth computation under critical loop constraints.</p>
+                <p class="sl" style="margin-top:8px;"><span class="sp">✦ </span><span style="color:var(--text-1);">Zobrist Hashing</span></p>
+                <p class="sl" style="padding-left:14px;" data-en="Bitwise state validation architecture matching dynamic cache transposition entries to avoid duplicate calculations." data-cz="Bitová architektura stavů s vyrovnávací pamětí zabraňuje opakovanému výpočtu stejných pozic.">Bitwise state validation architecture matching dynamic cache transposition entries to avoid duplicate calculations.</p>
+              </div>
+              <div class="spec">
+                <p style="font-size:8px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;margin-bottom:10px;" data-en="Controls" data-cz="Ovládání">Controls</p>
+                <div class="cr"><span class="ck">Left Click</span><span class="sl" data-en="Select / Move pieces on board" data-cz="Vybrat / Táhnout figurkou">Select / Move pieces on board</span></div>
+                <div class="cr" style="border:none;"><span class="ck">UI Buttons</span><span class="sl" data-en="Tah zpet (Undo), Fullscreen, Reset board state" data-cz="Tah zpět, Fullscreen, Reset stavu šachovnice">Tah zpet (Undo), Fullscreen, Reset board state</span></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div class="spec" style="flex:1;">
+                <p style="font-size:8px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;margin-bottom:12px;">Repo Structure</p>
+                <div class="ft">
+                  <p><span class="fd">chess/</span></p>
+                  <p style="padding-left:12px;"><span class="fc">├── main.cpp</span></p>
+                  <p style="padding-left:12px;"><span class="fc">├── sachovnice.cpp / sachovnice.h</span></p>
+                  <p style="padding-left:12px;"><span class="fc">├── grafika.cpp / grafika.h</span></p>
+                  <p style="padding-left:12px;"><span class="fc">├── menu.cpp / menu.h</span></p>
+                  <p style="padding-left:12px;"><span class="fc">├── pesak.cpp / kral.cpp / kralovna.cpp</span></p>
+                  <p style="padding-left:12px;"><span class="fc">└── vez.cpp / kun.cpp / strelec.cpp</span></p>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <a href="https://github.com/misa-stack/chess" target="_blank" class="bp" data-en="View on GitHub →" data-cz="GitHub →">View on GitHub →</a>
+                <a href="https://github.com/misa-stack/chess/archive/refs/heads/main.zip" class="bs" data-en="Download .ZIP" data-cz="Stáhnout">Download .ZIP</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <footer style="margin-top:24px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-    <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.2em;" data-en="Projects: 03" data-cz="Projekty: 03">Projects: 03</p>
+    <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.2em;" data-en="Projects: 04" data-cz="Projekty: 04">Projects: 04</p>
     <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em;">© 2026 misa-stack</p>
   </footer>
 </main>
