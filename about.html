@@ -1,274 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>misa-stack | About</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<style>
-:root{
-  --col:#3b82f6;
-  --col-dim:rgba(59,130,246,0.12);
-  --col-border:rgba(59,130,246,0.28);
-  --bg:#04050a;
-  --surface:rgba(255,255,255,0.025);
-  --border:rgba(255,255,255,0.07);
-  --border-h:rgba(255,255,255,0.13);
-  --text-1:#e2e2e8;
-  --text-2:#64646e;
-  --text-3:#2e2e35;
-  --r:1.5rem;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{
-  background:var(--bg);
-  background-image:
-    radial-gradient(ellipse 70% 55% at 15% 25%, rgba(29,78,216,0.14) 0%, transparent 65%),
-    radial-gradient(ellipse 45% 50% at 85% 75%, rgba(30,58,138,0.09) 0%, transparent 55%);
-  color:var(--text-1);
-  font-family:'Space Mono',monospace;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  min-height:100dvh;
-}
-
-#nav-pill{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:200;display:flex;align-items:center;background:rgba(4,5,10,0.94);border:1px solid rgba(255,255,255,0.08);border-radius:99px;padding:10px 20px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 2px 20px rgba(0,0,0,0.6);white-space:nowrap;}
-.pd{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pd 2s infinite;flex-shrink:0;}
-@keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
-.nl{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--text-1);text-decoration:none;text-transform:uppercase;margin:0 10px;}
-.ns{width:1px;height:14px;background:rgba(255,255,255,0.08);margin:0 6px;flex-shrink:0;}
-.na{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-2);text-decoration:none;padding:3px 9px;border-radius:99px;transition:color .2s,background .2s;}
-.na:hover{color:var(--text-1);background:rgba(255,255,255,0.05);}
-.na.cur{color:var(--text-1);font-weight:700;}
-.lb{font-size:10px;text-transform:uppercase;letter-spacing:.1em;background:none;border:none;cursor:pointer;color:var(--text-3);transition:color .2s;padding:2px 4px;}
-.lb.on{color:var(--text-1);font-weight:700;}
-.lb:hover{color:var(--text-2);}
-.lsp{font-size:10px;color:var(--text-3);margin:0 1px;}
-
-.monly{display:none;}
-@media(max-width:768px){.donly{display:none!important;}.monly{display:flex!important;}}
-#menu-btn{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;}
-.bar{display:block;width:20px;height:1.5px;background:var(--text-2);border-radius:2px;transform-origin:center;transition:transform .3s cubic-bezier(.23,1,.32,1),opacity .25s;}
-#mobile-menu{position:fixed;inset:0;z-index:150;background:rgba(4,5,10,0.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.23,1,.32,1);}
-#mobile-menu.open{opacity:1;pointer-events:auto;}
-.mml{font-size:clamp(2rem,8vw,3rem);font-weight:700;text-transform:uppercase;letter-spacing:-.02em;color:var(--text-3);text-decoration:none;transition:color .2s;transform:translateY(20px);opacity:0;}
-#mobile-menu.open .mml{animation:su .5s cubic-bezier(.23,1,.32,1) forwards;}
-#mobile-menu.open .mml:nth-child(1){animation-delay:.05s;}
-#mobile-menu.open .mml:nth-child(2){animation-delay:.1s;}
-#mobile-menu.open .mml:nth-child(3){animation-delay:.15s;}
-#mobile-menu.open .mml:nth-child(4){animation-delay:.2s;}
-#mobile-menu.open .mml:nth-child(5){animation-delay:.25s;}
-.mml:hover{color:var(--text-1);}
-.mml.cur{color:var(--col);}
-@keyframes su{to{transform:translateY(0);opacity:1;}}
-
-.card{background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:var(--r);transition:border-color .3s;}
-.card:hover{border-color:var(--border-h);}
-
-.label{display:inline-flex;align-items:center;gap:10px;font-size:9px;text-transform:uppercase;letter-spacing:.25em;color:var(--col);}
-.label::before{content:'';display:block;width:18px;height:1px;background:var(--col);opacity:.5;}
-
-.dot{width:6px;height:6px;background:var(--col);border-radius:50%;flex-shrink:0;margin-top:5px;}
-
-.prog{height:2px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
-.prog-fill{height:100%;background:var(--col);border-radius:2px;}
-
-.btn-link{display:inline-flex;align-items:center;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--col);border:1px solid var(--col-border);border-radius:99px;padding:10px 18px;text-decoration:none;transition:background .2s,color .2s,transform .15s;}
-.btn-link:hover{background:var(--col);color:#04050a;}
-.btn-link:active{transform:scale(0.97);}
-
-.grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;}
-@media(max-width:900px){.grid12{display:flex;flex-direction:column;gap:10px;}}
-.tl-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 32px;}
-@media(max-width:600px){.tl-grid{grid-template-columns:1fr;}}
-
-.reveal{opacity:1;}
-.serif{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Michal Krbec | C++, Cybersecurity and FPV</title>
+  <meta name="description" content="About Michal Krbec, a second-year cybersecurity student at SSPŠ interested in C++, mathematics, algorithms, Arch Linux, and FPV systems.">
+  <meta name="theme-color" content="#060809">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="About Michal Krbec | C++, Cybersecurity and FPV">
+  <meta property="og:description" content="A cybersecurity student interested in mathematics, algorithms, Linux, FPV systems, strategy, and dance.">
+  <meta property="og:url" content="https://misa.is-a.dev/about">
+  <meta property="og:image" content="https://misa.is-a.dev/og-image.png">
+  <link rel="canonical" href="https://misa.is-a.dev/about">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="ui-logic.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main" data-en="Skip to content" data-cz="Přejít na obsah">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="misa-stack home"><span class="brand-mark" aria-hidden="true"></span>misa-stack</a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html" data-en="Home" data-cz="Domů">Home</a>
+      <a class="nav-link" href="about.html" aria-current="page" data-en="About" data-cz="O mně">About</a>
+      <a class="nav-link" href="works.html" data-en="Works" data-cz="Projekty">Works</a>
+      <a class="nav-link" href="pricing.html" data-en="Services" data-cz="Služby">Services</a>
+      <a class="nav-link" href="contact.html" data-en="Contact" data-cz="Kontakt">Contact</a>
+      <div class="language-switch" aria-label="Language"><button class="lang-button" type="button" data-lang="en" aria-pressed="true">EN</button><button class="lang-button" type="button" data-lang="cz" aria-pressed="false">CZ</button></div>
+    </nav>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation" data-menu-button><span class="menu-lines" aria-hidden="true"></span></button>
+  </header>
+  <nav class="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation" aria-hidden="true" data-mobile-nav>
+    <a class="nav-link" href="index.html" data-en="Home" data-cz="Domů">Home</a>
+    <a class="nav-link" href="about.html" aria-current="page" data-en="About" data-cz="O mně">About</a>
+    <a class="nav-link" href="works.html" data-en="Works" data-cz="Projekty">Works</a>
+    <a class="nav-link" href="pricing.html" data-en="Services" data-cz="Služby">Services</a>
+    <a class="nav-link" href="contact.html" data-en="Contact" data-cz="Kontakt">Contact</a>
+    <div class="mobile-language" aria-label="Language"><button class="lang-button" type="button" data-lang="en" aria-pressed="true">EN</button><button class="lang-button" type="button" data-lang="cz" aria-pressed="false">CZ</button></div>
+  </nav>
 
-<div id="mobile-menu" role="dialog">
-  <a href="index.html"   class="mml"     data-en="Home"     data-cz="Domů">Home</a>
-  <a href="about.html"   class="mml cur" data-en="About"    data-cz="O mně">About</a>
-  <a href="works.html"   class="mml"     data-en="Works"    data-cz="Projekty">Works</a>
-  <a href="pricing.html" class="mml"     data-en="Services" data-cz="Služby">Services</a>
-  <a href="contact.html" class="mml"     data-en="Contact"  data-cz="Kontakt">Contact</a>
-  <div style="display:flex;gap:16px;margin-top:1rem;">
-    <button class="lb" data-lang="en" style="cursor:pointer;font-size:12px;">EN</button>
-    <span style="color:#2e2e35;">|</span>
-    <button class="lb" data-lang="cz" style="cursor:pointer;font-size:12px;">CZ</button>
-  </div>
-</div>
-
-<div id="nav-pill">
-  <div class="pd"></div>
-  <a href="index.html" class="nl">misa-stack</a>
-  <div class="ns"></div>
-  <div class="donly" style="display:flex;align-items:center;gap:0;">
-    <a href="index.html"   class="na"     data-en="Home"     data-cz="Domů">Home</a>
-    <a href="about.html"   class="na cur" data-en="About"    data-cz="O mně">About</a>
-    <a href="works.html"   class="na"     data-en="Works"    data-cz="Projekty">Works</a>
-    <a href="pricing.html" class="na"     data-en="Services" data-cz="Služby">Services</a>
-    <a href="contact.html" class="na"     data-en="Contact"  data-cz="Kontakt">Contact</a>
-    <div class="ns"></div>
-    <button class="lb" data-lang="en">EN</button>
-    <span class="lsp">/</span>
-    <button class="lb" data-lang="cz">CZ</button>
-  </div>
-  <button id="menu-btn" class="monly" aria-label="Menu" style="margin-left:8px;">
-    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-  </button>
-</div>
-
-<main style="max-width:1280px;margin:0 auto;padding:100px 16px 40px;">
-
-  <div class="reveal" style="margin-bottom:32px;">
-    <p class="label" data-en="// SYS.PROFILE" data-cz="// PROFIL">// SYS.PROFILE</p>
-    <h1 style="font-size:clamp(2.8rem,6vw,6.5rem);font-weight:700;letter-spacing:-.03em;line-height:.88;text-transform:uppercase;margin-top:12px;">
-      <span data-en="The " data-cz="Můj ">The </span><span class="serif" style="color:var(--col);" data-en="Story." data-cz="Příběh.">Story.</span>
-    </h1>
-  </div>
-
-  <div class="grid12">
-
-    <div class="reveal card" style="grid-column:1/9;padding:clamp(20px,3vw,40px);">
-      <p style="font-size:8px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;margin-bottom:16px;">Bio.init()</p>
-      <p style="font-size:clamp(14px,1.4vw,17px);color:#c4c4cc;line-height:1.7;margin-bottom:16px;"
-         data-en="I'm a developer and cybersecurity student at SPŠS in Prague. I mostly do C++ — I've written a physics engine and a fractal renderer from scratch. I also study cybersecurity, which means I'm slowly learning how things break, and why."
-         data-cz="Jsem vývojář a student kybernetické bezpečnosti na SPŠS v Praze. Dělám hlavně C++ — napsal jsem fyzikální engine a fraktálový renderer od nuly. Studuji kybernetickou bezpečnost, takže se pomalu učím, jak věci selhávají a proč.">
-        I'm a developer and cybersecurity student at SPŠS in Prague. I mostly do C++ — I've written a physics engine and a fractal renderer from scratch. I also study cybersecurity, which means I'm slowly learning how things break, and why.
-      </p>
-      <p style="font-size:clamp(13px,1.2vw,15px);color:var(--text-2);line-height:1.7;margin-bottom:20px;"
-         data-en="Outside of code I read a lot — mostly Karel Čapek. I play multiplayer games that have actual depth. I like building things that do something real, not just look good in a portfolio."
-         data-cz="Mimo kód hodně čtu — hlavně Karla Čapka. Hraju multiplayerové hry s hloubkou. Líbí se mi stavět věci, které něco skutečně dělají, nejen dobře vypadají.">
-        Outside of code I read a lot — mostly Karel Čapek. I play multiplayer games that have actual depth. I like building things that do something real, not just look good in a portfolio.
-      </p>
-      <blockquote style="border-left:2px solid var(--col-border);padding-left:16px;">
-        <p class="serif" style="font-size:clamp(15px,1.5vw,19px);color:var(--col);line-height:1.4;"
-           data-en='"If it's fast and clean, it's harder to break."'
-           data-cz='"Pokud je to rychlé a čisté, je to těžší prolomit."'>
-          "If it's fast and clean, it's harder to break."
-        </p>
-      </blockquote>
-    </div>
-
-    <div style="grid-column:9/13;display:flex;flex-direction:column;gap:10px;" class="reveal">
-      <div class="card" style="padding:20px;">
-        <p style="font-size:8px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;margin-bottom:14px;">System_Info</p>
-        <div style="display:flex;flex-direction:column;gap:10px;font-size:11px;">
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-3)" data-en="Status" data-cz="Status">Status</span><span style="color:#22c55e;">● <span data-en="Online" data-cz="Online">Online</span></span></div>
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-3)">Location</span><span>Prague, CZ</span></div>
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-3)">OS</span><span>Arch Linux</span></div>
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-3)" data-en="Focus" data-cz="Zaměření">Focus</span><span data-en="Cybersecurity" data-cz="Kybernetická bezpečnost">Cybersecurity</span></div>
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-3)">Freelance</span><span style="color:var(--col)" data-en="Available" data-cz="Dostupný">Available</span></div>
-        </div>
+  <main id="main" class="page-shell">
+    <section class="container page-hero about-hero">
+      <div class="reveal">
+        <h1 class="page-title">Michal Krbec</h1>
       </div>
-      <div class="card" style="padding:20px;flex:1;">
-        <p style="font-size:8px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;margin-bottom:14px;" data-en="Interests" data-cz="Zájmy">Interests</p>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;">
-          <span style="background:var(--col-dim);border:1px solid var(--col-border);color:var(--col);padding:3px 9px;border-radius:99px;font-size:9px;text-transform:uppercase;letter-spacing:.07em;">C++ Systems</span>
-          <span style="background:var(--col-dim);border:1px solid var(--col-border);color:var(--col);padding:3px 9px;border-radius:99px;font-size:9px;text-transform:uppercase;letter-spacing:.07em;">Pen Testing</span>
-          <span style="background:var(--col-dim);border:1px solid var(--col-border);color:var(--col);padding:3px 9px;border-radius:99px;font-size:9px;text-transform:uppercase;letter-spacing:.07em;">SIMD/AVX2</span>
-          <span style="background:var(--col-dim);border:1px solid var(--col-border);color:var(--col);padding:3px 9px;border-radius:99px;font-size:9px;text-transform:uppercase;letter-spacing:.07em;" data-en="Physics Engines" data-cz="Fyzikální enginy">Physics Engines</span>
-          <span style="background:var(--col-dim);border:1px solid var(--col-border);color:var(--col);padding:3px 9px;border-radius:99px;font-size:9px;text-transform:uppercase;letter-spacing:.07em;">Karel Čapek</span>
-          <span style="background:var(--col-dim);border:1px solid var(--col-border);color:var(--col);padding:3px 9px;border-radius:99px;font-size:9px;text-transform:uppercase;letter-spacing:.07em;" data-en="Games" data-cz="Hry">Games</span>
-        </div>
-      </div>
-    </div>
+    </section>
 
-    <div class="reveal card" style="grid-column:1/9;padding:clamp(20px,3vw,40px);">
-      <p style="font-size:8px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;margin-bottom:28px;">Timeline.log</p>
-      <div class="tl-grid">
-        <div style="display:flex;gap:12px;">
-          <div class="dot"></div>
-          <div>
-            <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em;" data-en="2024 – Present" data-cz="2024 – Nyní">2024 – Present</p>
-            <p style="font-size:14px;font-weight:700;margin-top:4px;" data-en="Cybersecurity @ SPŠS" data-cz="Kybernetická bezpečnost @ SPŠS">Cybersecurity @ SPŠS</p>
-            <p style="font-size:12px;color:var(--text-2);margin-top:4px;line-height:1.5;" data-en="Network security, cryptography, OS hardening. We also do CTFs and some ethical hacking." data-cz="Síťová bezpečnost, kryptografie, hardening OS. Taky CTFka a trochu etický hacking.">Network security, cryptography, OS hardening. We also do CTFs and some ethical hacking.</p>
+    <section class="container section-tight">
+      <div class="about-grid">
+        <article class="panel">
+          <p class="bio-copy" data-en="I am a second-year cybersecurity student at SSPŠ in Prague. I enjoy working in C++ because it lets me turn mathematics and algorithms into real systems whose behaviour I can measure, test, and improve. Search, simulations, and code below the interface are usually the most interesting parts for me." data-cz="Jsem student druhého ročníku kyberbezpečnosti na SSPŠ v Praze. Baví mě práce v C++, protože v něm mohu převést matematiku a algoritmy do skutečných systémů, jejichž chování jde měřit, testovat a zlepšovat. Nejvíc mě většinou zajímá prohledávání, simulace a kód schovaný pod rozhraním.">I am a second-year cybersecurity student at SSPŠ in Prague. I enjoy working in C++ because it lets me turn mathematics and algorithms into real systems whose behaviour I can measure, test, and improve. Search, simulations, and code below the interface are usually the most interesting parts for me.</p>
+          <p class="bio-copy" data-en="My system is Arch Linux, and I change it often. I am the kind of technician who, instead of downloading a program that does something for me, spends twenty hours editing a configuration file just to get one nice animation." data-cz="Mým systémem je Arch Linux a často si ho upravuji. Jsem ten typ technika, který si místo stažení programu, jenž něco udělá za něj, raději dvacet hodin upravuje konfigurační soubor, jen aby měl jednu hezkou animaci.">My system is Arch Linux, and I change it often. I am the kind of technician who, instead of downloading a program that does something for me, spends twenty hours editing a configuration file just to get one nice animation.</p>
+          <p class="bio-copy" data-en="At Lex Defensio Initiative (LDI), I select components, build hardware, and program solutions for FPV systems. I have also worked on an FPV video-signal relay. You can read more on the LDI website." data-cz="V Lex Defensio Initiative (LDI) vybírám součástky, stavím hardware a programuji řešení pro FPV systémy. Pracoval jsem také na retranslátoru FPV videosignálu. Více je na webu LDI.">At Lex Defensio Initiative (LDI), I select components, build hardware, and program solutions for FPV systems. I have also worked on an FPV video-signal relay. You can read more on the LDI website.</p>
+          <a class="text-link" href="https://ldi.zer0.cz/en/about" data-href-en="https://ldi.zer0.cz/en/about" data-href-cz="https://ldi.zer0.cz/cs/about" target="_blank" rel="noreferrer" data-en="Visit the LDI website" data-cz="Navštívit web LDI">Visit the LDI website</a>
+          <p class="bio-copy" data-en="Outside code, I play strategy games such as Hearts of Iron IV and train Latin and ballroom dance at DanceExpert." data-cz="Mimo programování hraji strategické hry, například Hearts of Iron IV, a věnuji se latinskoamerickým a standardním tancům v DanceExpert.">Outside code, I play strategy games such as Hearts of Iron IV and train Latin and ballroom dance at DanceExpert.</p>
+        </article>
+
+        <aside class="panel">
+          <dl class="fact-list">
+            <div><dt data-en="Studying" data-cz="Studium">Studying</dt><dd><a class="text-link" href="https://ssps.cz/skola/obory/it/" target="_blank" rel="noreferrer" data-en="Second-year cybersecurity at SSPŠ" data-cz="Druhý ročník kyberbezpečnosti na SSPŠ">Second-year cybersecurity at SSPŠ</a></dd></div>
+            <div><dt data-en="Focus" data-cz="Zaměření">Focus</dt><dd data-en="C++ and mathematics" data-cz="C++ a matematika">C++ and mathematics</dd></div>
+            <div><dt data-en="System" data-cz="Systém">System</dt><dd>Arch Linux</dd></div>
+            <div><dt data-en="Outside code" data-cz="Mimo kód">Outside code</dt><dd data-en="FPV, strategy games, Latin and ballroom dance" data-cz="FPV, strategické hry, latina a standardní tance">FPV, strategy games, Latin and ballroom dance</dd></div>
+          </dl>
+          <div class="button-row" style="margin-top: 28px;">
+            <a class="button button-primary" href="works.html" data-en="View work" data-cz="Projekty">View work</a>
+            <a class="button" href="mailto:misamichal.k@gmail.com" data-en="Email me" data-cz="Napiš mi">Email me</a>
           </div>
-        </div>
-        <div style="display:flex;gap:12px;">
-          <div class="dot"></div>
-          <div>
-            <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em;">2024</p>
-            <p style="font-size:14px;font-weight:700;margin-top:4px;">Iron Duel</p>
-            <p style="font-size:12px;color:var(--text-2);margin-top:4px;line-height:1.5;" data-en="C++17 ballistic simulator, bitmask terrain destruction." data-cz="C++17 balistický simulátor, bitmask destrukce terénu.">C++17 ballistic simulator, bitmask terrain destruction.</p>
-          </div>
-        </div>
-        <div style="display:flex;gap:12px;">
-          <div class="dot"></div>
-          <div>
-            <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em;">2024</p>
-            <p style="font-size:14px;font-weight:700;margin-top:4px;">Komplex</p>
-            <p style="font-size:12px;color:var(--text-2);margin-top:4px;line-height:1.5;" data-en="Fractal engine — AVX2 SIMD + tile multi-threading." data-cz="Fraktálový engine — AVX2 SIMD + tile multi-threading.">Fractal engine — AVX2 SIMD + tile multi-threading.</p>
-          </div>
-        </div>
-        <div style="display:flex;gap:12px;">
-          <div class="dot"></div>
-          <div>
-            <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em;" data-en="Ongoing" data-cz="Průběžně">Ongoing</p>
-            <p style="font-size:14px;font-weight:700;margin-top:4px;" data-en="Portfolio Website" data-cz="Portfolio">Portfolio Website</p>
-            <p style="font-size:12px;color:var(--text-2);margin-top:4px;line-height:1.5;" data-en="Tailwind, GSAP — no framework, no build step." data-cz="Tailwind, GSAP — žádný framework, žádný build.">Tailwind, GSAP — no framework, no build step.</p>
-          </div>
-        </div>
+        </aside>
       </div>
-    </div>
+    </section>
 
-    <div class="reveal card" style="grid-column:9/13;padding:20px;display:flex;flex-direction:column;gap:14px;">
-      <p style="font-size:8px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;" data-en="Now_Learning" data-cz="Aktuálně se učím">Now_Learning</p>
-      <div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);margin-bottom:6px;"><span data-en="Network Security" data-cz="Síťová bezpečnost">Network Security</span><span style="color:var(--col);font-size:9px;" data-en="Active" data-cz="Aktivní">Active</span></div>
-        <div class="prog"><div class="prog-fill" style="width:60%;"></div></div>
+    <section class="container section">
+      <div class="section-heading">
+        <h2 class="section-title" data-en="What I spend time on" data-cz="Čemu věnuji čas">What I spend time on</h2>
       </div>
-      <div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);margin-bottom:6px;"><span data-en="Ethical Hacking" data-cz="Etický hacking">Ethical Hacking</span><span style="color:var(--col);font-size:9px;" data-en="Active" data-cz="Aktivní">Active</span></div>
-        <div class="prog"><div class="prog-fill" style="width:45%;"></div></div>
+      <div class="timeline">
+        <article><span class="timeline-label" data-en="School" data-cz="Škola">School</span><h3 data-en="Cybersecurity at SSPŠ" data-cz="Kyberbezpečnost na SSPŠ">Cybersecurity at SSPŠ</h3><p data-en="I am learning how networks, operating systems, and software fail, then testing that knowledge in practical assignments." data-cz="Učím se, jak selhávají sítě, operační systémy a software, a pak si to ověřuji na praktických úlohách.">I am learning how networks, operating systems, and software fail, then testing that knowledge in practical assignments.</p></article>
+        <article><span class="timeline-label">C++</span><h3 data-en="Mathematics in running code" data-cz="Matematika v běžícím kódu">Mathematics in running code</h3><p data-en="I build search algorithms, simulations, and mathematical renderers, then measure where the implementation can be made clearer or faster." data-cz="Stavím prohledávací algoritmy, simulace a matematické renderery a potom měřím, kde může být implementace čistší nebo rychlejší.">I build search algorithms, simulations, and mathematical renderers, then measure where the implementation can be made clearer or faster.</p></article>
+        <article><span class="timeline-label">LDI / FPV</span><h3 data-en="Hardware and code for FPV" data-cz="Hardware a kód pro FPV">Hardware and code for FPV</h3><p data-en="I choose components, assemble hardware, and program solutions for drone and video-signal systems." data-cz="Vybírám součástky, stavím hardware a programuji řešení pro dronové systémy a přenos videosignálu.">I choose components, assemble hardware, and program solutions for drone and video-signal systems.</p><a class="text-link" href="https://ldi.zer0.cz/en/about" data-href-en="https://ldi.zer0.cz/en/about" data-href-cz="https://ldi.zer0.cz/cs/about" target="_blank" rel="noreferrer" data-en="Visit LDI" data-cz="Navštívit LDI">Visit LDI</a></article>
+        <article><span class="timeline-label" data-en="Outside code" data-cz="Mimo kód">Outside code</span><h3 data-en="Strategy and dance" data-cz="Strategie a tanec">Strategy and dance</h3><p data-en="I play Hearts of Iron IV and train Latin and ballroom dance at DanceExpert." data-cz="Hraji Hearts of Iron IV a trénuji latinskoamerické a standardní tance v DanceExpert.">I play Hearts of Iron IV and train Latin and ballroom dance at DanceExpert.</p></article>
       </div>
-      <div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);margin-bottom:6px;"><span data-en="Cryptography" data-cz="Kryptografie">Cryptography</span><span style="color:var(--text-3);font-size:9px;" data-en="Queued" data-cz="Ve frontě">Queued</span></div>
-        <div class="prog"><div class="prog-fill" style="width:18%;opacity:.5;"></div></div>
-      </div>
-      <a href="works.html" class="btn-link" style="margin-top:4px;text-align:center;justify-content:center;" data-en="See Projects →" data-cz="Projekty →">See Projects →</a>
-    </div>
+    </section>
+  </main>
 
-  </div>
-
-  <footer style="margin-top:24px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-    <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.2em;">Space Mono · GSAP · Vanilla JS</p>
-    <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em;">© 2026 misa-stack</p>
+  <footer class="container site-footer">
+    <span>© 2026 misa-stack</span>
+    <div class="footer-links"><a href="https://github.com/misa-stack" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:misamichal.k@gmail.com" data-en="Email me" data-cz="Napiš mi">Email me</a></div>
   </footer>
-</main>
-
-<script>
-(function(){
-  const saved=localStorage.getItem('lang')||'en';
-  function apply(lang){
-    document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=lang==='cz'?(el.dataset.cz||el.dataset.en):el.dataset.en;});
-    document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.dataset.lang===lang));
-    localStorage.setItem('lang',lang);
-  }
-  apply(saved);
-  window.addEventListener('storage',function(e){if(e.key==='lang')apply(e.newValue||'en');});
-  document.querySelectorAll('.lb').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.lang)));
-  window.addEventListener('load',()=>{
-    if(typeof gsap!=='undefined')gsap.fromTo('.reveal',{opacity:0,y:18},{opacity:1,y:0,duration:.7,stagger:.1,ease:'power3.out'});
-  });
-  const btn=document.getElementById('menu-btn');
-  const menu=document.getElementById('mobile-menu');
-  if(btn&&menu){
-    let open=false;
-    btn.addEventListener('click',()=>{
-      open=!open;menu.classList.toggle('open',open);
-      const bars=btn.querySelectorAll('.bar');
-      if(open){bars[0].style.transform='translateY(6px) rotate(45deg)';bars[1].style.opacity='0';bars[2].style.transform='translateY(-6px) rotate(-45deg)';}
-      else{bars[0].style.transform='';bars[1].style.opacity='';bars[2].style.transform='';}
-    });
-  }
-})();
-</script>
 </body>
 </html>

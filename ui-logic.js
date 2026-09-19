@@ -1,148 +1,188 @@
-/* ============================================================
-   ui-logic.js — shared across all pages
-   Canvas, ping, geo, nav active, CZ/EN switcher, mobile menu
-   ============================================================ */
+(function () {
+  const root = document.documentElement;
+  const menuButton = document.querySelector("[data-menu-button]");
+  const mobileNav = document.querySelector("[data-mobile-nav]");
+  const langButtons = Array.from(document.querySelectorAll("[data-lang]"));
+  const focusableSelector = "a[href], button:not([disabled]), summary, [tabindex]:not([tabindex='-1'])";
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let lastFocus = null;
 
-// ── Canvas particle background ───────────────────────────────
-(function initCanvas() {
-  const canvas = document.getElementById('bg-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [];
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+  function updateMenuLabel() {
+    if (!menuButton) return;
+    const isCzech = root.lang === "cs";
+    const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+    menuButton.setAttribute("aria-label", isOpen
+      ? (isCzech ? "Zavřít navigaci" : "Close navigation")
+      : (isCzech ? "Otevřít navigaci" : "Open navigation"));
   }
-  resize();
-  window.addEventListener('resize', resize);
 
-  for (let i = 0; i < 70; i++) {
-    particles.push({
-      x: Math.random() * 2000, y: Math.random() * 1200,
-      r: Math.random() * 1.0 + 0.3,
-      vx: (Math.random() - 0.5) * 0.15,
-      vy: (Math.random() - 0.5) * 0.15,
-      alpha: Math.random() * 0.25 + 0.04,
+  function applyLanguage(language) {
+    const lang = language === "cz" ? "cz" : "en";
+    root.lang = lang === "cz" ? "cs" : "en";
+    localStorage.setItem("lang", lang);
+
+    document.querySelectorAll("[data-en]").forEach(function (element) {
+      const value = lang === "cz" ? element.dataset.cz : element.dataset.en;
+      if (typeof value === "string") element.textContent = value;
+    });
+
+    document.querySelectorAll("[data-en-label]").forEach(function (element) {
+      const value = lang === "cz" ? element.dataset.czLabel : element.dataset.enLabel;
+      if (typeof value === "string") {
+        element.setAttribute("aria-label", value);
+        if (element.hasAttribute("data-label")) element.dataset.label = value;
+      }
+    });
+
+    document.querySelectorAll("[data-href-en]").forEach(function (element) {
+      const value = lang === "cz" ? element.dataset.hrefCz : element.dataset.hrefEn;
+      if (typeof value === "string") element.setAttribute("href", value);
+    });
+
+    langButtons.forEach(function (button) {
+      const active = button.dataset.lang === lang;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    updateMenuLabel();
+  }
+
+  function closeMenu(restoreFocus) {
+    if (!menuButton || !mobileNav) return;
+    mobileNav.classList.remove("is-open");
+    mobileNav.setAttribute("aria-hidden", "true");
+    mobileNav.inert = true;
+    menuButton.setAttribute("aria-expanded", "false");
+    updateMenuLabel();
+    document.body.style.overflow = "";
+    if (restoreFocus && lastFocus) lastFocus.focus();
+  }
+
+  function openMenu() {
+    if (!menuButton || !mobileNav) return;
+    lastFocus = document.activeElement;
+    mobileNav.classList.add("is-open");
+    mobileNav.setAttribute("aria-hidden", "false");
+    mobileNav.inert = false;
+    menuButton.setAttribute("aria-expanded", "true");
+    updateMenuLabel();
+    document.body.style.overflow = "hidden";
+    const firstLink = mobileNav.querySelector("a");
+    if (firstLink) firstLink.focus();
+  }
+
+  langButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      applyLanguage(button.dataset.lang);
+    });
+  });
+
+  applyLanguage(localStorage.getItem("lang") || "en");
+
+  if (menuButton && mobileNav) {
+    mobileNav.inert = true;
+    menuButton.addEventListener("click", function () {
+      if (menuButton.getAttribute("aria-expanded") === "true") closeMenu(true);
+      else openMenu();
+    });
+
+    mobileNav.addEventListener("click", function (event) {
+      if (event.target.closest("a")) closeMenu(false);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (!mobileNav.classList.contains("is-open")) return;
+
+      if (event.key === "Escape") {
+        closeMenu(true);
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      const focusable = [menuButton].concat(Array.from(mobileNav.querySelectorAll(focusableSelector)));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 900) closeMenu(false);
     });
   }
 
-  (function draw() {
-    ctx.clearRect(0, 0, W, H);
-    particles.forEach(p => {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(99,102,241,${p.alpha})`;
-      ctx.fill();
+  document.querySelectorAll("details.work-card").forEach(function (details) {
+    const summary = details.querySelector("summary");
+    const body = details.querySelector(".work-body");
+    if (!summary || !body) return;
+
+    summary.addEventListener("click", function (event) {
+      if (reducedMotion.matches || typeof body.animate !== "function") return;
+      event.preventDefault();
+      if (details.dataset.animating === "true") return;
+
+      details.dataset.animating = "true";
+      const closing = details.open;
+
+      if (!closing) details.open = true;
+
+      const frames = closing
+        ? [
+            { opacity: 1, transform: "translateY(0) scale(1)" },
+            { opacity: 0, transform: "translateY(-12px) scale(0.99)" }
+          ]
+        : [
+            { opacity: 0, transform: "translateY(-12px) scale(0.99)" },
+            { opacity: 1, transform: "translateY(0) scale(1)" }
+          ];
+
+      const animation = body.animate(frames, {
+        duration: closing ? 190 : 380,
+        easing: closing ? "ease-in" : "cubic-bezier(0.16, 1, 0.3, 1)"
+      });
+
+      animation.addEventListener("finish", function () {
+        if (closing) details.open = false;
+        delete details.dataset.animating;
+      }, { once: true });
+
+      animation.addEventListener("cancel", function () {
+        delete details.dataset.animating;
+      }, { once: true });
     });
-    requestAnimationFrame(draw);
-  })();
-})();
-
-// ── Fake latency ping ────────────────────────────────────────
-(function initPing() {
-  const el = document.getElementById('ping-stat');
-  if (!el) return;
-  function update() {
-    el.textContent = Math.floor(Math.random() * 18 + 4) + 'ms';
-    setTimeout(update, 2200 + Math.random() * 1500);
-  }
-  update();
-})();
-
-// ── Geolocation display ──────────────────────────────────────
-(function initLocation() {
-  const el = document.getElementById('location-stat');
-  if (!el) return;
-  fetch('https://ip-api.com/json/?fields=city,country')
-    .then(r => r.json())
-    .then(d => { if (d.city) el.textContent = d.city + ', ' + d.country; })
-    .catch(() => { el.textContent = 'CZ_ORIGIN'; });
-})();
-
-// ── Active nav highlight ─────────────────────────────────────
-(function initNav() {
-  const path = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-item').forEach(a => {
-    const href = (a.getAttribute('href') || '').split('/').pop();
-    if (href === path) a.classList.add('active-page');
-  });
-})();
-
-// ── Mobile menu ──────────────────────────────────────────────
-(function initMobileMenu() {
-  const btn  = document.getElementById('menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  if (!btn || !menu) return;
-
-  let open = false;
-
-  btn.addEventListener('click', () => {
-    open = !open;
-    menu.classList.toggle('menu-open', open);
-    btn.setAttribute('aria-expanded', open);
-    // morph hamburger → X
-    const bars = btn.querySelectorAll('.bar');
-    if (open) {
-      bars[0].style.transform = 'translateY(6px) rotate(45deg)';
-      bars[1].style.opacity   = '0';
-      bars[2].style.transform = 'translateY(-6px) rotate(-45deg)';
-    } else {
-      bars[0].style.transform = '';
-      bars[1].style.opacity   = '';
-      bars[2].style.transform = '';
-    }
   });
 
-  // Close on outside click
-  document.addEventListener('click', e => {
-    if (open && !btn.contains(e.target) && !menu.contains(e.target)) {
-      open = false;
-      menu.classList.remove('menu-open');
-      btn.setAttribute('aria-expanded', false);
-      const bars = btn.querySelectorAll('.bar');
-      bars[0].style.transform = '';
-      bars[1].style.opacity   = '';
-      bars[2].style.transform = '';
-    }
-  });
-})();
+  if (!reducedMotion.matches && "IntersectionObserver" in window) {
+    const revealTargets = Array.from(document.querySelectorAll(
+      ".section-heading, .project-row, .work-card, .panel, .timeline article, .service-feature, .service-item, .capability-main, .capability-side, .first-message-panel, .contact-link"
+    ));
 
-// ── CZ / EN Language Switcher ────────────────────────────────
-(function initLang() {
-  const saved = localStorage.getItem('lang') || 'en';
-  applyLang(saved);
-
-  document.addEventListener('click', function(e) {
-    const btn = e.target.closest('[data-lang]');
-    if (!btn) return;
-    const lang = btn.dataset.lang;
-    localStorage.setItem('lang', lang);
-    applyLang(lang);
-  });
-
-  function applyLang(lang) {
-    document.querySelectorAll('[data-lang]').forEach(btn => {
-      btn.classList.toggle('lang-active',   btn.dataset.lang === lang);
-      btn.classList.toggle('lang-inactive', btn.dataset.lang !== lang);
+    revealTargets.forEach(function (element, index) {
+      element.classList.add("scroll-reveal");
+      element.style.transitionDelay = (index % 3) * 45 + "ms";
     });
-    document.querySelectorAll('[data-en]').forEach(el => {
-      el.textContent = lang === 'cz'
-        ? (el.dataset.cz || el.dataset.en)
-        : el.dataset.en;
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("in-view");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.14, rootMargin: "0px 0px -5% 0px" });
+
+    revealTargets.forEach(function (element) {
+      observer.observe(element);
     });
-    document.documentElement.setAttribute('data-lang', lang);
+
+    requestAnimationFrame(function () {
+      root.classList.add("motion-ready");
+    });
   }
 })();
-
-// ── GSAP reveals ─────────────────────────────────────────────
-window.addEventListener('load', function () {
-  if (typeof gsap === 'undefined') return;
-  gsap.fromTo('.reveal',
-    { opacity: 0, y: 22 },
-    { opacity: 1, y: 0, duration: 0.75, stagger: 0.09, ease: 'power3.out', delay: 0.1 }
-  );
-});

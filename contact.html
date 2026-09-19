@@ -1,208 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>misa-stack | Contact</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<style>
-:root{
-  --col:#e11d48;
-  --col-dim:rgba(225,29,72,0.1);
-  --col-border:rgba(225,29,72,0.25);
-  --bg:#04050a;
-  --border:rgba(255,255,255,0.07);
-  --border-h:rgba(255,255,255,0.13);
-  --text-1:#e2e2e8;
-  --text-2:#64646e;
-  --text-3:#2e2e35;
-  --r:1.5rem;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{height:100%;}
-body{
-  background:var(--bg);
-  background-image:
-    radial-gradient(ellipse 65% 50% at 15% 25%, rgba(136,19,55,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 45% 55% at 85% 75%, rgba(100,10,35,0.10) 0%, transparent 55%);
-  color:var(--text-1);font-family:'Space Mono',monospace;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  min-height:100dvh;display:flex;flex-direction:column;
-}
-#nav-pill{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:200;display:flex;align-items:center;background:rgba(4,5,10,0.94);border:1px solid rgba(255,255,255,0.08);border-radius:99px;padding:10px 20px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 2px 20px rgba(0,0,0,0.6);white-space:nowrap;}
-.pd{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pd 2s infinite;flex-shrink:0;}
-@keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
-.nl{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--text-1);text-decoration:none;text-transform:uppercase;margin:0 10px;}
-.ns{width:1px;height:14px;background:rgba(255,255,255,0.08);margin:0 6px;flex-shrink:0;}
-.na{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-2);text-decoration:none;padding:3px 9px;border-radius:99px;transition:color .2s,background .2s;}
-.na:hover{color:var(--text-1);background:rgba(255,255,255,0.05);}
-.na.cur{color:var(--text-1);font-weight:700;}
-.lb{font-size:10px;text-transform:uppercase;letter-spacing:.1em;background:none;border:none;cursor:pointer;color:var(--text-3);transition:color .2s;padding:2px 4px;}
-.lb.on{color:var(--text-1);font-weight:700;}
-.lsp{font-size:10px;color:var(--text-3);margin:0 1px;}
-.monly{display:none;}
-@media(max-width:768px){.donly{display:none!important;}.monly{display:flex!important;}}
-#menu-btn{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;}
-.bar{display:block;width:20px;height:1.5px;background:var(--text-2);border-radius:2px;transform-origin:center;transition:transform .3s cubic-bezier(.23,1,.32,1),opacity .25s;}
-#mobile-menu{position:fixed;inset:0;z-index:150;background:rgba(4,5,10,0.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.23,1,.32,1);}
-#mobile-menu.open{opacity:1;pointer-events:auto;}
-.mml{font-size:clamp(2rem,8vw,3rem);font-weight:700;text-transform:uppercase;letter-spacing:-.02em;color:var(--text-3);text-decoration:none;transition:color .2s;transform:translateY(20px);opacity:0;}
-#mobile-menu.open .mml{animation:su .5s cubic-bezier(.23,1,.32,1) forwards;}
-#mobile-menu.open .mml:nth-child(1){animation-delay:.05s;}#mobile-menu.open .mml:nth-child(2){animation-delay:.1s;}#mobile-menu.open .mml:nth-child(3){animation-delay:.15s;}#mobile-menu.open .mml:nth-child(4){animation-delay:.2s;}#mobile-menu.open .mml:nth-child(5){animation-delay:.25s;}
-.mml:hover{color:var(--text-1);}.mml.cur{color:var(--col);}
-@keyframes su{to{transform:translateY(0);opacity:1;}}
-.reveal{opacity:1;}
-.serif{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;}
-
-.cc{border-radius:var(--r);padding:clamp(22px,3vw,32px);display:flex;flex-direction:column;gap:14px;text-decoration:none;background:rgba(255,255,255,0.025);border:1px solid var(--border);transition:background .25s,border-color .25s,transform .25s;}
-.cc:hover{background:rgba(255,255,255,0.04);border-color:var(--border-h);transform:translateY(-5px);}
-.cc:active{transform:translateY(-2px) scale(0.98);}
-.cc.pri{background:rgba(225,29,72,0.15);border-color:var(--col-border);}
-.cc.pri:hover{background:rgba(225,29,72,0.22);border-color:var(--col);}
-.cc-num{font-size:8px;text-transform:uppercase;letter-spacing:.2em;color:var(--text-3);}
-.cc.pri .cc-num{color:rgba(251,113,133,0.55);}
-.cc-name{font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;}
-.cc.pri .cc-name{color:#fb7185;}
-.cc-sub{font-size:11px;color:var(--text-2);}
-.cc.pri .cc-sub{color:rgba(251,113,133,0.6);}
-.arr{font-size:16px;color:var(--text-3);transition:transform .2s,color .2s;}
-.cc:hover .arr{transform:translate(3px,-3px);color:var(--text-2);}
-.cc.pri .arr{color:rgba(251,113,133,0.5);}
-.cc.pri:hover .arr{color:#fb7185;}
-@media(max-width:600px){.cgrid{grid-template-columns:1fr!important;}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Michal Krbec | Tutoring and Small Apps</title>
+  <meta name="description" content="Contact Michal Krbec about maths or programming tutoring and carefully scoped small software projects.">
+  <meta name="theme-color" content="#060809">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contact Michal Krbec | Tutoring and Small Apps">
+  <meta property="og:description" content="Direct communication about maths or programming tutoring and small software projects.">
+  <meta property="og:url" content="https://misa.is-a.dev/contact">
+  <meta property="og:image" content="https://misa.is-a.dev/og-image.png">
+  <link rel="canonical" href="https://misa.is-a.dev/contact">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="ui-logic.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main" data-en="Skip to content" data-cz="Přejít na obsah">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="misa-stack home"><span class="brand-mark" aria-hidden="true"></span>misa-stack</a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html" data-en="Home" data-cz="Domů">Home</a>
+      <a class="nav-link" href="about.html" data-en="About" data-cz="O mně">About</a>
+      <a class="nav-link" href="works.html" data-en="Works" data-cz="Projekty">Works</a>
+      <a class="nav-link" href="pricing.html" data-en="Services" data-cz="Služby">Services</a>
+      <a class="nav-link" href="contact.html" aria-current="page" data-en="Contact" data-cz="Kontakt">Contact</a>
+      <div class="language-switch" aria-label="Language"><button class="lang-button" type="button" data-lang="en" aria-pressed="true">EN</button><button class="lang-button" type="button" data-lang="cz" aria-pressed="false">CZ</button></div>
+    </nav>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation" data-menu-button><span class="menu-lines" aria-hidden="true"></span></button>
+  </header>
+  <nav class="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation" aria-hidden="true" data-mobile-nav>
+    <a class="nav-link" href="index.html" data-en="Home" data-cz="Domů">Home</a>
+    <a class="nav-link" href="about.html" data-en="About" data-cz="O mně">About</a>
+    <a class="nav-link" href="works.html" data-en="Works" data-cz="Projekty">Works</a>
+    <a class="nav-link" href="pricing.html" data-en="Services" data-cz="Služby">Services</a>
+    <a class="nav-link" href="contact.html" aria-current="page" data-en="Contact" data-cz="Kontakt">Contact</a>
+    <div class="mobile-language" aria-label="Language"><button class="lang-button" type="button" data-lang="en" aria-pressed="true">EN</button><button class="lang-button" type="button" data-lang="cz" aria-pressed="false">CZ</button></div>
+  </nav>
 
-<div id="mobile-menu" role="dialog">
-  <a href="index.html"   class="mml"     data-en="Home"     data-cz="Domů">Home</a>
-  <a href="about.html"   class="mml"     data-en="About"    data-cz="O mně">About</a>
-  <a href="works.html"   class="mml"     data-en="Works"    data-cz="Projekty">Works</a>
-  <a href="pricing.html" class="mml"     data-en="Services" data-cz="Služby">Services</a>
-  <a href="contact.html" class="mml cur" data-en="Contact"  data-cz="Kontakt">Contact</a>
-  <div style="display:flex;gap:16px;margin-top:1rem;">
-    <button class="lb" data-lang="en" style="cursor:pointer;font-size:12px;">EN</button>
-    <span style="color:#2e2e35;">|</span>
-    <button class="lb" data-lang="cz" style="cursor:pointer;font-size:12px;">CZ</button>
-  </div>
-</div>
-
-<div id="nav-pill">
-  <div class="pd"></div>
-  <a href="index.html" class="nl">misa-stack</a>
-  <div class="ns"></div>
-  <div class="donly" style="display:flex;align-items:center;gap:0;">
-    <a href="index.html"   class="na"     data-en="Home"     data-cz="Domů">Home</a>
-    <a href="about.html"   class="na"     data-en="About"    data-cz="O mně">About</a>
-    <a href="works.html"   class="na"     data-en="Works"    data-cz="Projekty">Works</a>
-    <a href="pricing.html" class="na"     data-en="Services" data-cz="Služby">Services</a>
-    <a href="contact.html" class="na cur" data-en="Contact"  data-cz="Kontakt">Contact</a>
-    <div class="ns"></div>
-    <button class="lb" data-lang="en">EN</button>
-    <span class="lsp">/</span>
-    <button class="lb" data-lang="cz">CZ</button>
-  </div>
-  <button id="menu-btn" class="monly" style="margin-left:8px;">
-    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-  </button>
-</div>
-
-<main style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1280px;margin:0 auto;padding:90px 16px 32px;width:100%;">
-
-  <div class="reveal" style="display:flex;justify-content:center;margin-bottom:clamp(24px,4vw,48px);">
-    <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border:1px solid var(--col-border);border-radius:99px;background:var(--col-dim);">
-      <div style="width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pd 2s infinite;"></div>
-      <span style="font-size:9px;color:var(--col);text-transform:uppercase;letter-spacing:.2em;" data-en="Remote_Access: Available" data-cz="Vzdálený_Přístup: Dostupný">Remote_Access: Available</span>
-    </div>
-  </div>
-
-  <div class="reveal" style="text-align:center;margin-bottom:clamp(16px,3vw,28px);">
-    <h1 style="font-size:clamp(3.5rem,12vw,10rem);font-weight:700;text-transform:uppercase;letter-spacing:-.03em;line-height:.85;">
-      <span data-en="Let's" data-cz="Pojď">Let's</span><br>
-      <span class="serif" style="color:var(--col);" data-en="solve it." data-cz="to vyřešit.">solve it.</span>
-    </h1>
-  </div>
-
-  <p class="reveal" style="text-align:center;font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.3em;margin-bottom:clamp(28px,5vw,52px);"
-     data-en="[ Establishing Secure Handshake... ]" data-cz="[ Navazuji zabezpečené spojení... ]">
-    [ Establishing Secure Handshake... ]
-  </p>
-
-  <div class="reveal cgrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:780px;margin:0 auto;width:100%;">
-
-    <a href="https://github.com/misa-stack" target="_blank" class="cc">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <p class="cc-num" data-en="01 // Code" data-cz="01 // Kód">01 // Code</p>
-        <span class="arr">↗</span>
+  <main id="main" class="page-shell">
+    <section class="container contact-layout">
+      <div class="contact-copy reveal">
+        <p class="eyebrow" data-en="Direct, one-to-one communication" data-cz="Přímá komunikace jeden na jednoho">Direct, one-to-one communication</p>
+        <h1 class="page-title" data-en="Tell me what you need." data-cz="Napiš mi, co potřebuješ.">Tell me what you need.</h1>
+        <p class="lede" data-en="For tutoring or a small app, send the goal, context, and preferred timing." data-cz="Pro doučování nebo menší aplikaci pošli cíl, kontext a preferovaný termín.">For tutoring or a small app, send the goal, context, and preferred timing.</p>
+        <div class="availability"><strong data-en="Online preferred. Prague available." data-cz="Preferuji online. V Praze i osobně.">Online preferred. Prague available.</strong> <span data-en="If it is outside my skills, I will tell you before making a promise." data-cz="Pokud je to mimo mé schopnosti, řeknu ti to dřív, než něco slíbím.">If it is outside my skills, I will tell you before making a promise.</span></div>
       </div>
-      <div>
-        <p class="cc-name">GitHub</p>
-        <p class="cc-sub">github.com/misa-stack</p>
-      </div>
-    </a>
 
-    <a href="https://www.instagram.com/mich.aaa.l/" target="_blank" class="cc">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <p class="cc-num" data-en="02 // Social" data-cz="02 // Sociální">02 // Social</p>
-        <span class="arr">↗</span>
+      <div class="contact-list reveal reveal-delay">
+        <a class="contact-link" href="mailto:misamichal.k@gmail.com">
+          <span><strong data-en="Email me" data-cz="Napiš mi">Email me</strong><span>misamichal.k@gmail.com</span></span>
+          <span class="contact-arrow" aria-hidden="true">01</span>
+        </a>
+        <a class="contact-link" href="https://github.com/misa-stack" target="_blank" rel="noreferrer">
+          <span><strong>GitHub</strong><span>github.com/misa-stack</span></span>
+          <span class="contact-arrow" aria-hidden="true">02</span>
+        </a>
+        <a class="contact-link" href="https://www.instagram.com/mich.aaa.l/" target="_blank" rel="noreferrer">
+          <span><strong>Instagram</strong><span>@mich.aaa.l</span></span>
+          <span class="contact-arrow" aria-hidden="true">03</span>
+        </a>
       </div>
-      <div>
-        <p class="cc-name">Instagram</p>
-        <p class="cc-sub">@mich.aaa.l</p>
-      </div>
-    </a>
+    </section>
+  </main>
 
-    <a href="mailto:misamichal.k@gmail.com" class="cc pri">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <p class="cc-num" data-en="03 // Direct" data-cz="03 // Přímý">03 // Direct</p>
-        <span class="arr">✉</span>
-      </div>
-      <div>
-        <p class="cc-name" data-en="Email Me" data-cz="Napiš mi">Email Me</p>
-        <p class="cc-sub">misamichal.k&#64;gmail.com</p>
-      </div>
-    </a>
-
-  </div>
-
-  <p class="reveal" style="text-align:center;font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.2em;margin-top:clamp(20px,4vw,36px);"
-     data-en="Response: usually within 24h · CZ / EN"
-     data-cz="Odpověď: obvykle do 24h · CZ / EN">
-    Response: usually within 24h · CZ / EN
-  </p>
-
-  <footer style="margin-top:auto;padding-top:24px;border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:clamp(32px,5vw,64px);">
-    <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.2em;" data-en="Encrypted · Space Mono · GSAP" data-cz="Šifrováno · Space Mono · GSAP">Encrypted · Space Mono · GSAP</p>
-    <p style="font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em;">© 2026 misa-stack</p>
+  <footer class="container site-footer">
+    <span>© 2026 misa-stack</span>
+    <div class="footer-links"><a href="works.html" data-en="View work" data-cz="Projekty">View work</a><a href="pricing.html" data-en="Services" data-cz="Služby">Services</a></div>
   </footer>
-</main>
-
-<script>
-(function(){
-  const saved=localStorage.getItem('lang')||'en';
-  function apply(lang){
-    document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=lang==='cz'?(el.dataset.cz||el.dataset.en):el.dataset.en;});
-    document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.dataset.lang===lang));
-    localStorage.setItem('lang',lang);
-  }
-  apply(saved);
-  document.querySelectorAll('.lb').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.lang)));
-  window.addEventListener('load',()=>{
-    if(typeof gsap!=='undefined')gsap.fromTo('.reveal',{opacity:0,y:18},{opacity:1,y:0,duration:.7,stagger:.1,ease:'power3.out'});
-  });
-  const btn=document.getElementById('menu-btn');
-  const menu=document.getElementById('mobile-menu');
-  if(btn&&menu){
-    let open=false;
-    btn.addEventListener('click',()=>{
-      open=!open;menu.classList.toggle('open',open);
-      const bars=btn.querySelectorAll('.bar');
-      if(open){bars[0].style.transform='translateY(6px) rotate(45deg)';bars[1].style.opacity='0';bars[2].style.transform='translateY(-6px) rotate(-45deg)';}
-      else{bars[0].style.transform='';bars[1].style.opacity='';bars[2].style.transform='';}
-    });
-  }
-})();
-</script>
 </body>
 </html>
