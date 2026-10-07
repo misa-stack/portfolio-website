@@ -1,0 +1,19 @@
+> uci
+id name Michal Chess
+id author Michal
+option name Threads type spin default 7 min 1 max 256
+option name Hash type spin default 16 min 1 max 1024
+option name Clear Hash type button
+option name OwnBook type check default true
+option name Move Overhead type spin default 30 min 0 max 5000
+uciok
+> setoption name Threads value 1
+> setoption name OwnBook value false
+> isready
+readyok
+> position startpos moves e2e4 e7e5 g1f3 b8c6 f1c4 g8f6
+> go depth 5
+info depth 5 nodes 134582 time 2874 nps 46815 score cp 18 pv b1c3
+info string workers 1 book candidates 0
+bestmove b1c3
+> quit

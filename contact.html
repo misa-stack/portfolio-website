@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Michal Krbec | Tutoring and Small Apps</title>
-  <meta name="description" content="Contact Michal Krbec about maths or programming tutoring and carefully scoped small software projects.">
-  <meta name="theme-color" content="#060809">
+  <title>Contact Michal Krbec | Projects, Roles and Tutoring</title>
+  <meta name="description" content="Talk to Michal Krbec about a developer role, a project to build together, or maths and programming tutoring. Online or in Prague.">
+  <meta name="theme-color" content="#191719">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Contact Michal Krbec | Tutoring and Small Apps">
-  <meta property="og:description" content="Direct communication about maths or programming tutoring and small software projects.">
+  <meta property="og:title" content="Contact Michal Krbec | Projects, Roles and Tutoring">
+  <meta property="og:description" content="A role, a shared project, or a problem to work through. Get in touch with Michal Krbec.">
   <meta property="og:url" content="https://misa.is-a.dev/contact">
   <meta property="og:image" content="https://misa.is-a.dev/og-image.png">
   <link rel="canonical" href="https://misa.is-a.dev/contact">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script src="theme-init.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script src="ui-logic.js" defer></script>
 </head>
@@ -28,9 +29,10 @@
       <a class="nav-link" href="contact.html" aria-current="page" data-en="Contact" data-cz="Kontakt">Contact</a>
       <div class="language-switch" aria-label="Language"><button class="lang-button" type="button" data-lang="en" aria-pressed="true">EN</button><button class="lang-button" type="button" data-lang="cz" aria-pressed="false">CZ</button></div>
     </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme" data-en-label="Switch to light theme" data-cz-label="Přepnout na světlý motiv" hidden><span data-theme-label>Light</span></button>
     <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation" data-menu-button><span class="menu-lines" aria-hidden="true"></span></button>
   </header>
-  <nav class="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation" aria-hidden="true" data-mobile-nav>
+  <nav class="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation" data-mobile-nav>
     <a class="nav-link" href="index.html" data-en="Home" data-cz="Domů">Home</a>
     <a class="nav-link" href="about.html" data-en="About" data-cz="O mně">About</a>
     <a class="nav-link" href="works.html" data-en="Works" data-cz="Projekty">Works</a>
@@ -42,24 +44,23 @@
   <main id="main" class="page-shell">
     <section class="container contact-layout">
       <div class="contact-copy reveal">
-        <p class="eyebrow" data-en="Direct, one-to-one communication" data-cz="Přímá komunikace jeden na jednoho">Direct, one-to-one communication</p>
-        <h1 class="page-title" data-en="Tell me what you need." data-cz="Napiš mi, co potřebuješ.">Tell me what you need.</h1>
-        <p class="lede" data-en="For tutoring or a small app, send the goal, context, and preferred timing." data-cz="Pro doučování nebo menší aplikaci pošli cíl, kontext a preferovaný termín.">For tutoring or a small app, send the goal, context, and preferred timing.</p>
-        <div class="availability"><strong data-en="Online preferred. Prague available." data-cz="Preferuji online. V Praze i osobně.">Online preferred. Prague available.</strong> <span data-en="If it is outside my skills, I will tell you before making a promise." data-cz="Pokud je to mimo mé schopnosti, řeknu ti to dřív, než něco slíbím.">If it is outside my skills, I will tell you before making a promise.</span></div>
+        <h1 class="page-title" data-en="What are you working on?" data-cz="Na čem pracuješ?">What are you working on?</h1>
+        <p class="lede" data-en="A role on your team, a project we could build together, or a maths problem that's getting on your nerves. Tell me a little about it." data-cz="Pracovní nabídka, projekt, který bychom mohli tvořit společně, nebo příklad, který ti už leze na nervy. Napiš mi, o co jde.">A role on your team, a project we could build together, or a maths problem that's getting on your nerves. Tell me a little about it.</p>
+        <div class="availability"><strong data-en="Online works best. Prague works too." data-cz="Nejradši online. V Praze i osobně.">Online works best. Prague works too.</strong> <span data-en="For maths or programming tutoring, send the topic and where you get stuck. For a role or project, tell me what you have in mind." data-cz="U doučování matematiky nebo programování přidej téma a místo, kde se zasekneš. U práce nebo projektu napiš, co máš v plánu.">For maths or programming tutoring, send the topic and where you get stuck. For a role or project, tell me what you have in mind.</span></div>
       </div>
 
       <div class="contact-list reveal reveal-delay">
         <a class="contact-link" href="mailto:misamichal.k@gmail.com">
           <span><strong data-en="Email me" data-cz="Napiš mi">Email me</strong><span>misamichal.k@gmail.com</span></span>
-          <span class="contact-arrow" aria-hidden="true">01</span>
+          <span class="contact-arrow" aria-hidden="true">↗</span>
         </a>
         <a class="contact-link" href="https://github.com/misa-stack" target="_blank" rel="noreferrer">
           <span><strong>GitHub</strong><span>github.com/misa-stack</span></span>
-          <span class="contact-arrow" aria-hidden="true">02</span>
+          <span class="contact-arrow" aria-hidden="true">↗</span>
         </a>
         <a class="contact-link" href="https://www.instagram.com/mich.aaa.l/" target="_blank" rel="noreferrer">
           <span><strong>Instagram</strong><span>@mich.aaa.l</span></span>
-          <span class="contact-arrow" aria-hidden="true">03</span>
+          <span class="contact-arrow" aria-hidden="true">↗</span>
         </a>
       </div>
     </section>

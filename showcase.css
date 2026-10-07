@@ -1,0 +1,55 @@
+/* Framed project scenes progressively enhance a readable static gallery. */
+.project-stack { display: grid; gap: clamp(4rem, 8vw, 8rem); padding-bottom: 4rem; }
+.project-feature { min-width: 0; scroll-margin-top: 7rem; }
+.project-intro { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1fr); align-items: end; gap: 2rem; margin-bottom: 1.7rem; }
+.project-intro h2 { margin: 0; font-size: clamp(3.5rem, 7vw, 6.5rem); line-height: .95; letter-spacing: -.055em; }
+.project-intro p { max-width: 38rem; margin: 0; color: var(--muted); font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.65; }
+.project-intro .project-kind { margin-bottom: .7rem; color: var(--accent); font-size: 1rem; }
+.showcase-frame { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 1.15rem; background: var(--surface); box-shadow: inset 0 1px rgba(255,255,255,.18), var(--shadow); }
+.showcase-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: 1rem 1.4rem; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,.075), transparent), var(--surface-2); }
+.showcase-toolbar > strong { font-size: 1rem; font-weight: 650; }
+.scene-selector { display: none; flex-wrap: wrap; gap: .4rem; }
+.showcase-ready .scene-selector { display: flex; }
+.scene-selector button { min-height: 44px; padding: .55rem 1rem; border: 1px solid transparent; border-radius: .55rem; background: transparent; color: var(--muted); cursor: pointer; font: inherit; font-size: .9375rem; transition: background .18s ease, color .18s ease, border-color .18s ease; }
+.scene-selector button:hover { color: var(--text); border-color: var(--line); }
+.scene-selector button[aria-pressed="true"] { background: var(--text); color: var(--bg); box-shadow: 0 2px 5px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.4); }
+.showcase-scene[hidden], [data-scene][hidden] { display: none !important; }
+.showcase-scene:not(:last-child) { border-bottom: 1px solid var(--line); }
+.showcase-ready .showcase-scene { border-bottom: 0; }
+.scene-media { display: block; margin: 0; overflow: hidden; background: #080b0e; }
+.scene-media img { display: block; width: 100%; height: auto; }
+.scene-media a { display: block; }
+.scene-caption { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1fr); gap: 2rem; padding: clamp(1.4rem, 3vw, 2.5rem); }
+.scene-caption h3 { margin: 0 0 .7rem; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -.025em; line-height: 1.15; }
+.scene-caption p { margin: 0; color: var(--muted); line-height: 1.7; }
+.scene-caption p + p { margin-top: .8rem; }
+.scene-caption .capture-link { display: inline-block; margin-top: .6rem; color: var(--text); font-size: .9375rem; text-underline-offset: .25em; }
+.showcase-links { display: flex; flex-wrap: wrap; gap: .7rem; padding: 0 clamp(1.4rem, 3vw, 2.5rem) 1.8rem; }
+.engine-scene { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .85fr); align-items: center; min-height: 28rem; gap: 2rem; padding: clamp(1.4rem, 4vw, 3.2rem); background: var(--surface-2); }
+.engine-path { margin: 0; padding-left: 1.4rem; }
+.engine-path li { padding: .9rem 0 .9rem .6rem; }
+.engine-path li::marker { color: var(--accent); font-weight: 700; }
+.engine-path strong { display: block; margin-bottom: .3rem; font-size: 1.2rem; }
+.engine-path p { margin: 0; color: var(--muted); }
+.engine-output { min-width: 0; border: 1px solid rgba(255,255,255,.18); border-radius: .55rem; overflow: hidden; background: #111315; color: #f0ebe4; }
+.engine-output > p { margin: 0; padding: 1rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,.15); color: #c3bdb7; font-size: .9375rem; }
+.engine-output pre { margin: 0; padding: 1.4rem; overflow-x: auto; font-size: clamp(.875rem, 1.2vw, 1rem); line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2; }
+.engine-output code { font-family: var(--mono, monospace); }
+.uci-scene { padding: clamp(1.4rem, 4vw, 3.2rem); background: var(--surface-2); }
+.uci-scene .engine-output { max-width: 56rem; margin-inline: auto; }
+.project-secondary { border-top: 1px solid var(--line); padding-top: 3rem; }
+.project-secondary .project-intro h2 { font-size: clamp(3rem, 6vw, 5rem); }
+.project-secondary video { display: block; width: 100%; height: auto; background: #080b0e; }
+.project-secondary .media-error { padding: 1rem 1.4rem; color: var(--text); }
+@media (max-width: 760px) {
+  .project-intro, .scene-caption, .engine-scene { grid-template-columns: 1fr; gap: 1.2rem; }
+  .project-intro { align-items: start; }
+  .showcase-toolbar { align-items: flex-start; padding: 1rem; }
+  .scene-selector { width: 100%; }
+  .scene-selector button { flex: 1 1 auto; padding-inline: .6rem; }
+  .showcase-links { gap: .55rem; }
+  .showcase-links .button { width: 100%; justify-content: center; }
+  .engine-scene { min-height: 0; }
+  .engine-path { padding-left: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) { .scene-selector button { transition: none; } }
