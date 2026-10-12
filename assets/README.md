@@ -1,5 +1,24 @@
 # Portfolio project media
 
+## FBManager (2026-10-12)
+
+Source: [misa-stack/facebook-post-manager](https://github.com/misa-stack/facebook-post-manager),
+revision `387e201d5d101d8b93c72567c3b7d4fafb4f1248`.
+
+- `fbmanager-session.txt`: actual output from `python -m fbmanager` in a
+  pseudo-terminal, followed by selecting `1` to open the Add Page submenu.
+  The `$ python -m fbmanager` line identifies the invocation; the following
+  menu text and echoed input are captured unchanged, with CRLF normalized to LF.
+- `fbmanager-terminal.webp`: a 1200 × 720 rendering of that transcript using
+  Noto Sans Mono at 25 px, encoded as WebP at quality 92. This is a typeset
+  terminal transcript, not a screenshot of a desktop terminal window. No
+  successful publishing results, account details, or dashboard UI were invented.
+
+Capture used an isolated temporary `FBMANAGER_HOME` and an empty database.
+No credentials were supplied and no Facebook API calls were made. Source code
+was read to verify the feature descriptions; live publishing and Windows
+execution were not tested for this portfolio update.
+
 ## Ocelový duel refresh (2026-10-08)
 
 The Iron Duel showcase now reflects `/home/michal/ocelovyduel` at Git revision

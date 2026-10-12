@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects | Michal Krbec, C++ Developer</title>
-  <meta name="description" content="My C++ chess engine, Komplex fractal explorer, and SDL2 Iron Duel with AI opponents and verified replays. Explore the apps and their source code.">
+  <meta name="description" content="FBManager, a Python CLI for Facebook Pages, alongside my C++ chess engine, Komplex fractal explorer, and Iron Duel. Explore the projects and source code.">
   <meta name="theme-color" content="#191719">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Projects | Michal Krbec, C++ Developer">
-  <meta property="og:description" content="A chess engine, fractal explorer, and artillery game, built in C++. See how they work and read the source.">
+  <meta property="og:description" content="FBManager for Facebook Pages, a chess engine, fractal explorer, and artillery game. Explore my Python and C++ projects and read the source.">
   <meta property="og:url" content="https://misa.is-a.dev/works">
   <meta property="og:image" content="https://misa.is-a.dev/og-image.png">
   <link rel="canonical" href="https://misa.is-a.dev/works">
@@ -45,10 +45,51 @@
 
   <main id="main" class="page-shell">
     <section class="container page-hero">
-      <div class="reveal"><h1 class="page-title" data-en="Here's what I've been building." data-cz="Na čem pracuju.">Here's what I've been building.</h1><p class="lede" data-en="A chess engine, a fractal explorer, and an artillery game. Each gives me a different problem to work through in C++: choosing a move, drawing a fractal, or simulating the ground beneath a tank." data-cz="Šachový engine, prohlížeč fraktálů a dělostřelecká hra. V každém řeším v C++ něco jiného: jak vybrat tah, vykreslit fraktál nebo simulovat zem pod tankem.">A chess engine, a fractal explorer, and an artillery game. Each gives me a different problem to work through in C++: choosing a move, drawing a fractal, or simulating the ground beneath a tank.</p></div>
+      <div class="reveal"><h1 class="page-title" data-en="Here's what I've been building." data-cz="Na čem pracuju.">Here's what I've been building.</h1><p class="lede" data-en="From a Facebook Page manager in Python to a chess engine, fractal explorer, and artillery game in C++. Each project gives me a different problem to work through, from API failures to search and simulation." data-cz="Od správce facebookových stránek v Pythonu po šachový engine, prohlížeč fraktálů a dělostřeleckou hru v C++. V každém projektu řeším jiný problém: od chyb API po prohledávání a simulaci.">From a Facebook Page manager in Python to a chess engine, fractal explorer, and artillery game in C++. Each project gives me a different problem to work through, from API failures to search and simulation.</p></div>
       <aside class="page-hero-aside reveal reveal-delay"><strong  data-en="See how they work." data-cz="Podívej se, jak fungují.">See how they work.</strong><span  data-en="Switch between screenshots, explanations, and recordings. The source is linked with each project." data-cz="Přepínej mezi snímky aplikací, vysvětlením a záznamy. U každého projektu najdeš i odkaz na kód.">Switch between screenshots, explanations, and recordings. The source is linked with each project.</span></aside>
     </section>
     <div class="container project-stack">
+      <article class="project-feature" id="fbmanager">
+        <div class="project-intro"><div><p class="project-kind" data-en="Python · Graph API · Windows / Linux" data-cz="Python · Graph API · Windows / Linux">Python · Graph API · Windows / Linux</p><h2>FBManager</h2></div><p data-en="A Python CLI for Facebook Pages I’m authorized to manage. It brings publishing, Page authorization, and local action history into one terminal workflow, with an interactive menu or individual commands." data-cz="Python CLI pro facebookové stránky, které mám oprávnění spravovat. Publikování, autorizaci stránek a místní historii akcí spojuje do jednoho nástroje s interaktivním menu i samostatnými příkazy.">A Python CLI for Facebook Pages I’m authorized to manage. It brings publishing, Page authorization, and local action history into one terminal workflow, with an interactive menu or individual commands.</p></div>
+        <div class="showcase-frame" data-showcase>
+          <div class="showcase-toolbar">
+            <strong data-en="Inside FBManager" data-cz="Uvnitř FBManageru">Inside FBManager</strong>
+            <div class="scene-selector" role="group" aria-label="FBManager views" data-en-label="FBManager views" data-cz-label="Pohledy na FBManager">
+              <button type="button" data-scene-button="fbmanager-terminal" aria-pressed="false" data-en="The terminal" data-cz="Terminál">The terminal</button>
+              <button type="button" data-scene-button="fbmanager-internals" aria-pressed="false" data-en="Under the hood" data-cz="Pod kapotou">Under the hood</button>
+            </div>
+          </div>
+          <section class="showcase-scene" data-scene="fbmanager-terminal">
+            <figure class="scene-media"><a href="assets/fbmanager-terminal.webp"><img src="assets/fbmanager-terminal.webp" alt="FBManager terminal menu with Page authorization and token renewal options" data-en-alt="FBManager terminal menu with Page authorization and token renewal options" data-cz-alt="Terminálové menu FBManageru s autorizací stránek a obnovou tokenů" width="1200" height="720" loading="lazy"></a></figure>
+            <div class="scene-caption">
+              <div><h3 data-en="Page management, one prompt at a time." data-cz="Správa stránek přímo z terminálu.">Page management, one prompt at a time.</h3><a class="capture-link" href="assets/fbmanager-session.txt" data-en="Read the captured session ↗" data-cz="Přečíst záznam relace ↗">Read the captured session ↗</a></div>
+              <div><p data-en="The capture shows the actual main menu and Page setup options from a local run. Choose a saved Page, prepare a post, or check its history without leaving the terminal." data-cz="Ukázka zachycuje skutečné hlavní menu a možnosti připojení stránky z místního běhu. Vybereš uloženou stránku, připravíš příspěvek nebo projdeš její historii přímo v terminálu.">The capture shows the actual main menu and Page setup options from a local run. Choose a saved Page, prepare a post, or check its history without leaving the terminal.</p><p data-en="This session was recorded offline with an empty database. Publishing requires a Meta app and Page permissions; live publishing was not tested for this showcase." data-cz="Tato relace byla zaznamenána offline s prázdnou databází. Publikování vyžaduje aplikaci Meta a oprávnění ke stránce; živé publikování nebylo pro tuto ukázku testováno.">This session was recorded offline with an empty database. Publishing requires a Meta app and Page permissions; live publishing was not tested for this showcase.</p></div>
+            </div>
+          </section>
+          <section class="showcase-scene" data-scene="fbmanager-internals">
+            <div class="engine-scene">
+              <ol class="engine-path"><li><strong data-en="Connect the Pages you manage." data-cz="Připoj stránky, které spravuješ.">Connect the Pages you manage.</strong><p data-en="Import authorized Pages or attach a Page token, then save each Page under a local nickname. Renew authorization and refresh tokens from the CLI." data-cz="Importuj stránky přes autorizaci nebo přidej token stránky. Každou uložíš pod vlastní přezdívkou. Autorizaci i tokeny pak obnovíš z příkazové řádky.">Import authorized Pages or attach a Page token, then save each Page under a local nickname. Renew authorization and refresh tokens from the CLI.</p></li>
+<li><strong data-en="Publish text, images, or links." data-cz="Publikuj text, obrázky i odkazy.">Publish text, images, or links.</strong><p data-en="Post text, a single image, or a link preview; comment and like as a saved Page. The menu previews actions before confirmation. Direct commands submit immediately." data-cz="Publikuj text, jeden obrázek nebo náhled odkazu. Komentuj a lajkuj za uloženou stránku. Menu ukáže náhled akce před potvrzením, přímé příkazy ji provedou ihned.">Post text, a single image, or a link preview; comment and like as a saved Page. The menu previews actions before confirmation. Direct commands submit immediately.</p></li>
+<li><strong data-en="Keep track of what happened." data-cz="Měj přehled o provedených akcích.">Keep track of what happened.</strong><p data-en="SQLite stores the local action history. JSON output makes Page lists and command results usable in scripts." data-cz="SQLite ukládá místní historii akcí. Výstup v JSONu umožňuje zpracovat seznam stránek i výsledky příkazů ve skriptech.">SQLite stores the local action history. JSON output makes Page lists and command results usable in scripts.</p></li></ol>
+              <div class="engine-output">
+                <p data-en="Read-only command examples" data-cz="Příklady příkazů pro čtení dat">Read-only command examples</p>
+                <pre><code>$ python -m fbmanager --help
+$ python -m fbmanager accounts list
+$ python -m fbmanager --json accounts list
+$ python -m fbmanager history --limit 10</code></pre>
+              </div>
+            </div>
+            <div class="scene-caption">
+              <div><h3 data-en="Credentials and uncertain requests." data-cz="Přístupové údaje a nejistý výsledek.">Credentials and uncertain requests.</h3></div>
+              <div><p data-en="Credentials are encrypted with Fernet using a key derived from a vault passphrase with scrypt. Page metadata and action history remain unencrypted in the local database." data-cz="Přístupové údaje šifruje Fernet klíčem odvozeným z hesla k trezoru pomocí scrypt. Metadata stránek a historie akcí zůstávají v místní databázi nešifrované.">Credentials are encrypted with Fernet using a key derived from a vault passphrase with scrypt. Page metadata and action history remain unencrypted in the local database.</p><p data-en="If a write request loses its response, the action may already have succeeded. FBManager records an unknown status instead of automatically retrying, so I can check the result before sending it again." data-cz="Pokud se ztratí odpověď na zápisový požadavek, akce už mohla proběhnout. FBManager uloží stav unknown a požadavek automaticky neopakuje. Výsledek tak můžu ověřit, než akci odešlu znovu.">If a write request loses its response, the action may already have succeeded. FBManager records an unknown status instead of automatically retrying, so I can check the result before sending it again.</p></div>
+            </div>
+          </section>
+          <div class="showcase-links">
+            <a class="button button-primary" href="https://github.com/misa-stack/facebook-post-manager" target="_blank" rel="noreferrer" data-en="Read the code ↗" data-cz="Podívat se na kód ↗">Read the code ↗</a>
+            <a class="button" href="https://github.com/misa-stack/facebook-post-manager#run-from-source" target="_blank" rel="noreferrer" data-en="Setup and usage ↗" data-cz="Instalace a použití ↗">Setup and usage ↗</a>
+          </div>
+        </div>
+      </article>
       <article class="project-feature" id="chess">
         <div class="project-intro"><div><p class="project-kind" data-en="C++ · SDL · My own engine" data-cz="C++ · SDL · Vlastní engine">C++ · SDL · My own engine</p><h2  data-en="Chess" data-cz="Šachy">Chess</h2></div><p  data-en="I write the engine behind the moves: legal move generation, position evaluation, and search. You can play through the SDL interface or run the same engine from the command line over UCI." data-cz="Píšu vlastní engine: generování legálních tahů, hodnocení pozic i prohledávání. Hrát se dá v SDL rozhraní, stejný engine ale běží i z příkazové řádky přes UCI.">I write the engine behind the moves: legal move generation, position evaluation, and search. You can play through the SDL interface or run the same engine from the command line over UCI.</p></div>
         <div class="showcase-frame" data-showcase>

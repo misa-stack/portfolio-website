@@ -3,6 +3,38 @@
 Checked locally on 2026-10-07 with Chromium through Playwright. The site remains
 plain HTML, CSS, and JavaScript; no build step or backend is required.
 
+## FBManager addition (2026-10-12)
+
+Added a homepage feature and a two-scene Works showcase in English and Czech,
+plus source/setup links and the project entry in the simulated terminal.
+Descriptions were checked against `misa-stack/facebook-post-manager` revision
+`387e201d5d101d8b93c72567c3b7d4fafb4f1248`. The actual offline menu transcript
+and its rendered image are documented in [`assets/README.md`](assets/README.md).
+
+- Chromium through Playwright: homepage and Works at 1440, 390, and 320 px,
+  both languages and both themes (24 page configurations). All 11 Works
+  scenes were exercised in each configuration (132 scene checks).
+- No page overflow, translation mismatches, duplicate IDs, browser exceptions,
+  or HTTP errors. The new images loaded, the homepage link reached `#fbmanager`,
+  and the simulated terminal's `projects` command included FBManager.
+- New scene controls passed mouse and keyboard checks (ArrowRight and Home).
+  Both scenes and the transcript link remained available without JavaScript.
+  The configuration matrix used reduced motion; a separate navigation check
+  used normal browser motion preferences.
+- Desktop English/dark and mobile Czech/light captures were visually reviewed.
+  The FBManager heading was sized to preserve the gap beside its introduction.
+- Local links, fragment targets, and 281 translation attribute pairs across
+  all HTML files passed structural checks. Changed JavaScript syntax and
+  `git diff --check` passed.
+- Final local mobile Lighthouse audit: performance 94, accessibility 100,
+  best practices 100, SEO 100. FCP 2.1 s, LCP 2.7 s, TBT 0 ms, CLS 0.02.
+  An earlier run overlapped the browser matrix and scored 53 for performance;
+  the final run was taken after those tests finished. Scores are local lab
+  results using Python's development server, not production field metrics.
+
+No deployment or live Facebook publishing was performed. Native Windows
+execution, Safari, and Firefox were not tested during this update.
+
 ## Ocelový duel refresh (2026-10-08)
 
 The Works page now reflects the C++17 / SDL2 application at local revision

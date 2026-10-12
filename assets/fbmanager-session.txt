@@ -1,0 +1,16 @@
+$ python -m fbmanager
+
+1. Add Page
+2. List Pages
+3. Edit Page
+4. Perform action
+0. Exit
+> 1
+1. Attach with Page token
+2. Import existing Page from authorization
+3. Set up authorization
+4. List authorized Pages
+5. Renew User authorization
+6. Refresh saved Page token
+0. Back
+Select option: 

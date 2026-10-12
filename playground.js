@@ -287,7 +287,7 @@
       welcome: ["You found the terminal. Of course there’s one.\nTry help, about, projects, or clear", "Našel jsi terminál. Samozřejmě tu jeden je.\nZkus help, about, projects nebo clear"],
       help: ["help      show these commands\nabout     a little about me\nprojects  what I build\nclear     clear this screen", "help      seznam příkazů\nabout     něco o mně\nprojects  co tvořím\nclear     vymazat obrazovku"],
       about: ["Michal Krbec\nCybersecurity student in Prague. I write C++ to understand algorithms, work on FPV hardware, and spend too long configuring Arch.", "Michal Krbec\nStudent kyberbezpečnosti v Praze. Píšu v C++, abych pochopil algoritmy, pracuji na FPV hardwaru a trávím příliš času konfigurací Archu."],
-      projects: ["Komplex — a C++ / Qt 6 fractal explorer.\nChess — my own C++ engine, with a graphical board and UCI.\nOpen Works to explore both projects.", "Komplex — prohlížeč fraktálů v C++ / Qt 6.\nChess — můj vlastní C++ engine s grafickou šachovnicí a UCI.\nOba najdeš na stránce Projekty."],
+      projects: ["Komplex — a C++ / Qt 6 fractal explorer.\nChess — my own C++ engine, with a graphical board and UCI.\nFBManager — a Python CLI for Facebook Pages.\nOpen Works to explore the projects.", "Komplex — prohlížeč fraktálů v C++ / Qt 6.\nChess — můj vlastní C++ engine s grafickou šachovnicí a UCI.\nFBManager — Python CLI pro facebookové stránky.\nNajdeš je na stránce Projekty."],
       unknown: ["Unknown command. Type help for the four available commands.", "Neznámý příkaz. Napiš help pro seznam čtyř dostupných příkazů."]
     };
 
